@@ -1,0 +1,17 @@
+.find-field {
+    height: 33px;
+    width: 320px;
+    flex: 1;
+    box-sizing: border-box;
+    padding: 0px;
+    font-size: 16px;
+    display: inline-block;
+    margin: 10px 0px 10px 10px;
+}
+
+.find-button {
+    height: 33px;
+    width: 55px;
+    margin: 10px 10px 10px 0px;
+    font-size: 16px;
+}

@@ -1,0 +1,14 @@
+.task-title {
+    font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
+    font-size: 16px;
+    box-sizing: border-box;
+    color: #000000;
+    font-weight: 500;
+    letter-spacing: .24px;
+    line-height: 24px;
+    display: block;
+    unicode-bidi: isolate;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    font-weight: bold;
+}
