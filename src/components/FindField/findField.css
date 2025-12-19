@@ -1,5 +1,5 @@
 .find-field {
-    height: 33px;
+    height: 37px;
     width: 320px;
     flex: 1;
     box-sizing: border-box;
@@ -7,11 +7,30 @@
     font-size: 16px;
     display: inline-block;
     margin: 10px 0px 10px 10px;
+    border-radius: 4px;
+    border: 1px solid rgb(233, 232, 232);
+    padding: 3px 15px;
 }
 
 .find-button {
-    height: 33px;
+    height: 37px;
     width: 55px;
     margin: 10px 10px 10px 0px;
     font-size: 16px;
+    border-radius: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(233, 232, 232);
+    padding: 3px 12px;
+}
+
+.find-icon {
+    height: 37px;
+    width: 55px;
+}
+
+form {
+    display: flex;
 }
