@@ -17,7 +17,7 @@ function FindField({ onSearch }) {
                 type="text"
                 value={query}
                 onChange={e => setQuery(e.target.value)}
-                placeholder="Введите название задачи"
+                placeholder="Укажите название задачи"
                 maxLength={60}
             />
             <button className="find-button" type="submit">

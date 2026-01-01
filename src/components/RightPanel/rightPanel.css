@@ -3,7 +3,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    width: 35px;
+    width: 30px;
     border: 5px solid #252f66;
     padding: 5px;
 }
