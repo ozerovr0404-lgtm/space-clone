@@ -7,6 +7,8 @@ import TaskTitle from './components/TaskTitle/taskTitle';
 import TasksTable from './components/TasksTable/tasksTable';
 import { useState } from 'react';
 import Drawer from './components/DrawerAddTask/DrawerAddTask';
+import Creator from './components/CreatorForm/Creator';
+import TitleTaskField from './components/TitleField/TitleField'
 
 
 
@@ -34,9 +36,8 @@ function App() {
               </button>
 
               <Drawer open={open} onClose={() => setOpen(false)}>
-                {/* добавить форму для заполнения и создания*/}
-                <input placeholder="Название" />   {/* Создать отдельные компоненты, которые будут улетать в Drawer или новый компонент Form-Submit*/}
-                <textarea placeholder="Описание" />
+                <Creator />
+                <TitleTaskField />
                 <button>Сохранить</button>
               </Drawer>
         </TopPanel>

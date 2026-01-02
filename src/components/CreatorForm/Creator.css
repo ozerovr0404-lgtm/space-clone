@@ -1,0 +1,27 @@
+.creator {
+    color: rgb(103, 103, 111);
+    font-size: 14px;
+    font-weight: 500;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 14px;
+    margin: 35px 20px 30px 10px;
+}
+
+.creator-field {
+    font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
+    height: 37px;
+    width: 700px;
+    box-sizing: border-box;
+    padding: 0px;
+    font-size: 14px;
+    display: inline-block;
+    margin-left: auto;
+    border-radius: 4px;
+    border: 1px solid rgb(233, 232, 232);
+    padding: 6px 12px;
+    
+}
