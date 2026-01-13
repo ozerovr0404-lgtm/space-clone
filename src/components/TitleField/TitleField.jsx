@@ -6,17 +6,17 @@ function TitleTaskField(value) {
 
     return (
         <form>
-            <div>
+            <div className="task-title">
                 <label>Заголовок</label>
                 <input
                     type="textarea"
-                    className="task-title"
+                    className="task-title-field"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="Укажите заголовок"
                 />
             </div>
-        </form>
+        </form> 
     )
 }
 

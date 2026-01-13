@@ -1,6 +1,6 @@
 .creator {
     color: rgb(103, 103, 111);
-    font-size: 14px;
+    font-size: 15.8px;
     font-weight: 500;
     display: grid;
     grid-template-columns: auto 1fr;
@@ -8,13 +8,13 @@
     gap: 12px;
     width: 100%;
     margin-bottom: 14px;
-    margin: 35px 20px 30px 10px;
+    margin: 10px 20px 10px 10px;
 }
 
 .creator-field {
     font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
     height: 37px;
-    width: 700px;
+    width: 770px;
     box-sizing: border-box;
     padding: 0px;
     font-size: 14px;

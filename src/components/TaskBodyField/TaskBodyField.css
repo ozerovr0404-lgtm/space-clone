@@ -1,4 +1,4 @@
-.task-title {
+.title-body-field {
     color: rgb(103, 103, 111);
     font-size: 15.8px;
     font-weight: 500;
@@ -11,9 +11,9 @@
     margin: 10px 20px 10px 10px;
 }
 
-.task-title-field{
+.body-field {
     font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
-    height: 37px;
+    height: 260px;
     width: 770px;
     box-sizing: border-box;
     padding: 0px;

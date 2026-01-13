@@ -24,6 +24,7 @@
     justify-content: center;
     border: 1px solid rgb(233, 232, 232);
     padding: 3px 12px;
+    cursor: pointer;
 }
 
 .find-icon {
