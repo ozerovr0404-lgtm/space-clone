@@ -1,23 +1,17 @@
 import "./Creator.css";
-import { useState } from 'react';
 
-function Creator(value) {
-
-    const [creator, setCreator] = useState("");
+function Creator({value, onChange}) {
 
     return (
-        <form>
             <div className="creator"> 
                 <label>Создатель</label>
-                <input 
-                    type="text"
+                <input type="text" 
                     className="creator-field"
-                    value={creator}
-                    onChange={(e) => setCreator(e.target.value)}
+                    value={value}
+                    onChange={(e) => onChange(e.target.value)}
                     placeholder="Не указано"
                 />
             </div>
-        </form>
     )
 };
 

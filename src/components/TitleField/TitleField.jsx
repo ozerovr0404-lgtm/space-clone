@@ -1,22 +1,17 @@
 import "./TitleField.css";
-import { useState } from 'react';
 
-function TitleTaskField(value) {
-    const [title, setTitle] = useState("");
+function TitleTaskField({value, onChange}) {
 
     return (
-        <form>
-            <div className="task-title">
+            <div className="task-title-field-wrapper">
                 <label>Заголовок</label>
-                <input
-                    type="textarea"
+                <textarea
                     className="task-title-field"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    value={value}
+                    onChange={(e) => onChange(e.target.value)}
                     placeholder="Укажите заголовок"
                 />
             </div>
-        </form> 
     )
 }
 

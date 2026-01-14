@@ -1,23 +1,17 @@
 import "./TaskBodyField.css";
-import { useState } from 'react';
 
-function TaskBodyField (value) {
-    const [bodyField, setBodyField] = useState("");
+function TaskBodyField ({ value, onChange }) {
 
     return (
-        <form>
             <div className="title-body-field">
                 <label>Тело задачи</label> 
-                <input
-                    type="textarea"
+                <textarea
                     className="body-field"
-                    value={bodyField}
-                    onChange={(e) => setBodyField(e.target.value)}
+                    value={value}
+                    onChange={(e) => onChange(e.target.value)}
                     placeholder="Описание задачи"
                 />
-
             </div>
-        </form>
     )
 }
 
