@@ -21,6 +21,14 @@ function App() {
   const [creator, setCreator] = useState('');
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
+  const [errors, setErrors] = useState({
+    creator: false,
+    title: false,
+    body: false
+  });
+  const [tasks, setTasks] = useState([]);
+  const [sortOrder, setSortOrder] = useState('desc');
+
 
   useEffect(() => {
     fetch('http://localhost:5000/')
@@ -29,16 +37,65 @@ function App() {
     .catch(err => console.error(err));
   }, []);
 
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log({
-      creator,
-      title,
-      body
-    });
+    const newErrors = {
+      creator: !creator.trim(),
+      title: !title.trim(),
+      body: !body.trim()
+    };
+    setErrors(newErrors);
+
+    if (newErrors.creator || newErrors.title || newErrors.body) {
+      return;
+    }
+
+
+    const newTask = { creator, title, body }
+
+    try {
+      const response = await fetch('http://localhost:5000/tasks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newTask)
+      });
+
+
+      const result = await response.json();
+      console.log('Ответ сервера', result);
+
+      setTasks(prevTasks => [result.task, ...prevTasks]);
+      setCreator('');
+      setTitle('');
+      setBody('');
+      setErrors({ creator: false, title: false, body: false });
+      setOpen(false);
+
+    } catch (err) {
+      console.error('Ошибка при добавлении задачи', err);
+    }    
   };
+
+
+  useEffect(() => {
+    fetch('http://localhost:5000/tasks')
+    .then(res => res.json())
+    .then(tasks => setTasks(tasks))
+    .catch(err => console.error(err));
+  }, [])
   
+
+  const sortedTasks = [...tasks].sort((a, b) => {
+    if (sortOrder == 'asc') {
+      return a.id - b.id;
+    } else {
+      return b.id - a.id;
+    }
+  });
 
   return (
     <>
@@ -63,15 +120,34 @@ function App() {
             </div>
           </TopPanel>
           
-        <TasksTable />
+        <TasksTable tasks={tasks} />
 
         </BackgroundMain>
                   <Drawer open={open} onClose={() => setOpen(false)}>
                     <form onSubmit={handleSubmit}>
                       <div className='form-fields'>
-                        <Creator value={creator} onChange={setCreator} />
-                        <TitleTaskField value={title} onChange={setTitle} />
-                        <TaskBodyField value={body} onChange={setBody} />
+                        <Creator 
+                          value={creator} 
+                          onChange={(val) => {
+                          setCreator(val);
+                          setErrors(prev => ({ ...prev, creator: false }));
+                        }} 
+                          hasError={errors.creator}/>
+
+                        <TitleTaskField 
+                          value={title} 
+                            onChange={(val) => {
+                              setTitle(val);
+                              setErrors(prev => ({ ...prev, title: false }));
+                            }} 
+                            hasError={errors.title}/>
+                        <TaskBodyField
+                          value={body} 
+                          onChange={(val) => {
+                            setBody(val);
+                            setErrors(prev => ({ ...prev, body: false }))
+                          }} 
+                          hasError={errors.body}/>
                         <button type="submit" className="save-new-task">Создать</button>
                       </div>
                     </form>

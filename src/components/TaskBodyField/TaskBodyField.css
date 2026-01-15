@@ -24,3 +24,7 @@
     border: 1px solid rgb(233, 232, 232);
     padding: 6px 12px;
 }
+
+.error {
+    border: 2px solid rgb(230, 104, 104);
+}

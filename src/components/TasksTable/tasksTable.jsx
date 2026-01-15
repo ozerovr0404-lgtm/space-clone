@@ -1,29 +1,34 @@
 import './tasksTable.css';
 
-function TasksTable({children}) {
+function TasksTable({tasks}) {
     return (
         <table>
             <thead>
                 <tr>
-                    <th scope="col">Заголовок</th>
-                    <th scope="col">Категория</th>
-                    <th scope="col">Статус выполнения</th>
-                    <th scope="col">Срок</th>
-                    <th scope="col">Дата создания</th>
-                    <th scope="col">Ответственный</th>
-                    <th scope="col">Создатель</th>
+                    <th>id</th>
+                    <th>Создатель</th>
+                    <th>Заголовок</th>
+                    <th>Тело задачи</th>
+                    <th>Дата и время создания</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">{children}</th>
-                    <th scope="row">{children}</th>
-                    <th scope="row">{children}</th>
-                    <th scope="row">{children}</th>
-                    <th scope="row">{children}</th>
-                    <th scope="row">{children}</th>
-                    <th scope="row">{children}</th>
-                </tr>
+                {tasks.map(task => (
+                    <tr key={task.id}>
+                        <td>{task.id}</td>
+                        <td>{task.creator}</td>
+                        <td>{task.title}</td>
+                        <td>{task.body}</td>
+                        <td>{new Date(task.created_at).toLocaleString('ru-RU', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            second: '2-digit'
+                        })}</td>
+                    </tr>
+                ))}
             </tbody>
         </table>
     )

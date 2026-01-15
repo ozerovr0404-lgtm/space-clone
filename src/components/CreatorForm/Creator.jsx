@@ -1,12 +1,13 @@
 import "./Creator.css";
 
-function Creator({value, onChange}) {
+function Creator({value, onChange, hasError}) {
 
     return (
             <div className="creator"> 
                 <label>Создатель</label>
-                <input type="text" 
-                    className="creator-field"
+                <input 
+                    type="text" 
+                    className={`creator-field ${hasError ? 'error' : ''}`}
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                     placeholder="Не указано"

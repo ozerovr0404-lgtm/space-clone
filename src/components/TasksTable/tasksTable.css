@@ -11,8 +11,8 @@ thead {
     background-color: #fff;
 }
 
-th,
-td {
+thead th, tbody td {
     border: 1px solid rgb(240, 240, 240);
     padding: 15px 10px;
+    text-align: left;
 }
