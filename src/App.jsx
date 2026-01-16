@@ -10,6 +10,7 @@ import Drawer from './components/DrawerAddTask/DrawerAddTask';
 import Creator from './components/CreatorForm/Creator';
 import TitleTaskField from './components/TitleField/TitleField';
 import TaskBodyField from './components/TaskBodyField/TaskBodyField';
+import TaskTableSorted from './components/TaskTableSorted/taskTableSorted.jsx';
 
 
 
@@ -90,7 +91,7 @@ function App() {
   
 
   const sortedTasks = [...tasks].sort((a, b) => {
-    if (sortOrder == 'asc') {
+    if (sortOrder === 'asc') {
       return a.id - b.id;
     } else {
       return b.id - a.id;
@@ -118,9 +119,16 @@ function App() {
                 Создать задачу
               </button>
             </div>
+            
           </TopPanel>
           
-        <TasksTable tasks={tasks} />
+            <TaskTableSorted 
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+            />  
+        
+
+        <TasksTable tasks={sortedTasks} />
 
         </BackgroundMain>
                   <Drawer open={open} onClose={() => setOpen(false)}>
