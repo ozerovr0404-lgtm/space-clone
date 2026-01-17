@@ -91,17 +91,18 @@ function App() {
   
 
   const sortedTasks = [...tasks].sort((a, b) => {
+    const dateA = new Date(a.created_at);
+    const dateB = new Date(b.created_at);
+
     if (sortOrder === 'asc') {
-      return a.id - b.id;
+      return dateA - dateB;
     } else {
-      return b.id - a.id;
+      return dateB - dateA;
     }
   });
 
   return (
     <>
-      {/* <h1>React + Backend Test</h1>
-      {data ? <pre>{JSON.stringify(data, null, 2)}</pre> : 'Loading...'}  Добавлялось для теста бекенда*/}
     
 
       <div className="app">
