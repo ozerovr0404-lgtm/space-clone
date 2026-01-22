@@ -5,13 +5,10 @@
     width: 50%;
     height: 100vh;
     background: #ffffff;
-
     transition: transform .5s ease;
     transform: translateX(100%);
-
     display: flex;
     flex-direction: column;
-    
     z-index: 20;
     font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
     font-size: 13px;
