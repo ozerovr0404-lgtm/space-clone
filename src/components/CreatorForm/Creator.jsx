@@ -4,7 +4,7 @@ function Creator({value, onChange, hasError}) {
 
     return (
             <div className="creator"> 
-                <label>Создатель</label>
+                <label className="label-creator">Создатель</label>
                 <input 
                     type="text" 
                     className={`creator-field ${hasError ? 'error' : ''}`}

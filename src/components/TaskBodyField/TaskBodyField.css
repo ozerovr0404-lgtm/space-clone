@@ -4,25 +4,30 @@
     font-weight: 500;
     display: grid;
     grid-template-columns: auto 1fr;
-    align-items: center;
+    align-items: flex-start;
     gap: 12px;
     width: 100%;
     margin-bottom: 14px;
     margin: 10px 20px 10px 10px;
 }
 
+.task-body-label {
+    margin: 10px 10px;
+    width: 80px;
+    justify-content: end ;
+}
+
 .body-field {
     font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
-    height: 260px;
+    height: 200px;
     width: 770px;
     box-sizing: border-box;
-    padding: 0px;
     font-size: 14px;
     display: inline-block;
-    margin-left: auto;
+    margin: 10px;
     border-radius: 4px;
     border: 1px solid rgb(233, 232, 232);
-    padding: 6px 12px;
+    padding: 6px 12px;   
 }
 
 .error {

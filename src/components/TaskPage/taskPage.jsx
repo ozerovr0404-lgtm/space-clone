@@ -11,6 +11,7 @@ import Creator from '..//CreatorForm/Creator';
 import TitleTaskField from '..//TitleField/TitleField';
 import TaskBodyField from '..//TaskBodyField/TaskBodyField';
 import TaskTableSorted from '..//TaskTableSorted/taskTableSorted.jsx';
+import './taskPage.css';
 
 
 
@@ -127,9 +128,10 @@ function TaskPage() {
               setSortOrder={setSortOrder}
             />  
         
-
-        <TasksTable tasks={sortedTasks} />
-
+        <div className="task-table">
+          <TasksTable tasks={sortedTasks} />
+        </div>
+        
         </BackgroundMain>
                   <Drawer open={open} onClose={() => setOpen(false)}>
                     <form onSubmit={handleSubmit}>

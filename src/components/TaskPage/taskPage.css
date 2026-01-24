@@ -1,0 +1,10 @@
+.form-fields {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.task-table {
+    margin: 0 15px;
+}

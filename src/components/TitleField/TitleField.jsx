@@ -4,7 +4,7 @@ function TitleTaskField({value, onChange, hasError}) {
 
     return (
             <div className="task-title-field-wrapper">
-                <label>Заголовок</label>
+                <label className="task-title-label">Заголовок</label>
                 <textarea
                     className={`task-title-field ${hasError ? 'error' : ''}`}
                     value={value}

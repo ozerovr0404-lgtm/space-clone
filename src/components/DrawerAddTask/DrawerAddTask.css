@@ -16,7 +16,6 @@
 
 .drawer-open {
     transform: translateX(0%);
-    
 }
 
 .drawer-header {
@@ -27,6 +26,12 @@
     border-bottom: 1px solid #eee;
     padding: 5px;
     margin: 0px 5px 0px 15px;
+}
+
+h2 {
+    font-size: 20px;
+    font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
+    margin: 10px;
 }
 
 .drawer-body {
