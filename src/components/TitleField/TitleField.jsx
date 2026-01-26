@@ -10,6 +10,7 @@ function TitleTaskField({value, onChange, hasError}) {
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                     placeholder="Укажите заголовок"
+                    maxLength={95}
                 />
             </div>
     )

@@ -10,6 +10,7 @@ function TaskBodyField ({ value, onChange, hasError }) {
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                     placeholder="Описание задачи"
+                    maxLength={990}
                 />
             </div>
     )

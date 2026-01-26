@@ -5,31 +5,37 @@ function RegisterModal({ onClose }) {
     const [login,setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [repeatPassword, setRepeatPassword] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
 
-        try {
-            const response = await fetch('http://localhost:5000/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ login, password })
-            });
-            
-            const data = await response.json();
+        if (password === repeatPassword) {  //Но лучше сделать через (password !== repeatPassword) чтобы была возможность добавлять иные проверки и почистить код
+            try {
+                const response = await fetch('http://localhost:5000/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ login, password })
+                });
+                
+                const data = await response.json();
 
-            if (!response.ok) {
-                setError(data.error || 'Ошибка регистрации');
-                return;
+                if (!response.ok) {
+                    setError(data.error || 'Ошибка регистрации');
+                    return;
+                } else {
+                    onClose();
+                }
+
+            } catch (err) {
+                setError('Ошибка соединения с сервером');
             }
-
-            onClose();
-
-        } catch (err) {
-            setError('Ошибка соединения с сервером');
+        } else {
+            setError('Пароли должны совпадать!')
         }
-    };
+
+    }
 
     return (
         <div className="modal-overlay">
@@ -49,7 +55,14 @@ function RegisterModal({ onClose }) {
                         type="password"
                         placeholder='Пароль'
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)} 
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+
+                    <input
+                        type="password"
+                        placeholder="Повторите пароль"
+                        value={repeatPassword}
+                        onChange={(e) => setRepeatPassword(e.target.value)}
                     />
 
                     <button type="submit" className="get-register">Зарегистрироваться</button>

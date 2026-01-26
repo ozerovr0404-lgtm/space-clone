@@ -11,6 +11,7 @@ function Creator({value, onChange, hasError}) {
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                     placeholder="Не указано"
+                    maxLength={55}
                 />
             </div>
     )

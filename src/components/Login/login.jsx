@@ -48,6 +48,7 @@ function Login() {
 
             <form onSubmit={handleSubmit} className="login-form">
                     <input
+                        className="login-text"
                         type="text"
                         placeholder="Логин"
                         value={login}

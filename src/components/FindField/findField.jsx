@@ -1,6 +1,5 @@
 import './findField.css';
 import React from 'react';
-import {ReactComponent as PlusIcon } from '../Plus_svg/magnifying-glass.svg';
 
 function FindField({ onSearch }) {
     const [query, setQuery] = React.useState('');
@@ -21,7 +20,13 @@ function FindField({ onSearch }) {
                 maxLength={60}
             />
             <button className="find-button" type="submit">
-                <PlusIcon className="find-icon"/>
+                <img
+                    src="/magnifying-glass.svg"
+                    alt="Find"
+                    width={37}
+                    height={25}
+                />
+                
             </button>
         </form>
     )

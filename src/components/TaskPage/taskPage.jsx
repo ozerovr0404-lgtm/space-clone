@@ -12,6 +12,7 @@ import TitleTaskField from '..//TitleField/TitleField';
 import TaskBodyField from '..//TaskBodyField/TaskBodyField';
 import TaskTableSorted from '..//TaskTableSorted/taskTableSorted.jsx';
 import './taskPage.css';
+import UserMenu from '../UserMenu/userMenu.jsx';
 
 
 
@@ -106,7 +107,9 @@ function TaskPage() {
     
 
       <div className="app">
-        <RigthPanel />
+        <RigthPanel>
+          <UserMenu />
+        </RigthPanel>
 
         <BackgroundMain>
           <TopPanel>

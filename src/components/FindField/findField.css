@@ -1,12 +1,12 @@
 .find-field {
     height: 37px;
-    width: 380px;
+    width: 320px;
     flex: 1;
     box-sizing: border-box;
     padding: 0px;
     font-size: 16px;
     display: inline-block;
-    margin: 12px;
+    margin: 12px 0px 12px;
     border-radius: 4px;
     border: 1px solid rgb(233, 232, 232);
     padding: 3px 15px;
@@ -14,22 +14,24 @@
 
 .find-button {
     height: 37px;
-    width: 55px;
-    margin: 12px;
+    width: 42px;
+    margin: 12px 0px 12px;
     font-size: 16px;
     border-radius: 5px;
-
     display: flex;
     align-items: center;
     justify-content: center;
     border: 1px solid rgb(233, 232, 232);
-    padding: 3px 12px;
+    padding: 0px;
     cursor: pointer;
+    background-color: rgb(255, 255, 255);
 }
 
 .find-icon {
-    height: 37px;
-    width: 55px;
+    height: 35px;
+    width: 30px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(233, 232, 232);
 }
 
 form {

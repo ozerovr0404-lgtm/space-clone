@@ -1,0 +1,10 @@
+.user-icon {
+    height: 42px;
+    width: 42px;
+    cursor: pointer;
+    padding: 1px;
+    margin: 0px 0px 25px 0px;
+    border-radius: 22px;
+    background-color: rgb(233, 232, 232);
+}
+
