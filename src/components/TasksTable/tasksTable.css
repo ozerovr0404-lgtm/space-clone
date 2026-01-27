@@ -17,3 +17,11 @@ thead th, tbody td {
     padding: 15px 10px;
     text-align: left;
 }
+
+tbody tr:nth-child(even) {
+    background-color: #f8f9ff;
+}
+
+tbody tr:nth-child(odd) {
+    background-image: #fff;
+}

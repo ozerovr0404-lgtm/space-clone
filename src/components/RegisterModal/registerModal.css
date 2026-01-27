@@ -60,3 +60,15 @@
     font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
     cursor: pointer;
 }
+
+.register-login {
+    font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
+    height: 37px;
+    box-sizing: border-box;
+    padding: 0px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid rgb(233, 232, 232);
+    padding: 6px 12px;  
+    margin: 12px;
+}

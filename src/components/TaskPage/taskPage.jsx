@@ -40,6 +40,13 @@ function TaskPage() {
   }, []);
 
 
+  const clearAddTaskField = () => {
+    setCreator('');
+    setTitle('');
+    setBody('');
+  };
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -137,7 +144,7 @@ function TaskPage() {
         
         </BackgroundMain>
                   <Drawer open={open} onClose={() => setOpen(false)}>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} className='form-in-drawer'>
                       <div className='form-fields'>
                         <Creator 
                           value={creator} 
@@ -161,9 +168,19 @@ function TaskPage() {
                             setErrors(prev => ({ ...prev, body: false }))
                           }} 
                           hasError={errors.body}/>
-                        <button type="submit" className="save-new-task">Создать</button>
+                        
+                        <div className='down-grey-line'> 
+
+                          <div className='clear-but'>
+                            <button type='button' className='clear-add-task-fields' onClick={clearAddTaskField}>Очистить</button>
+                          </div>
+
+                          <button type="submit" className="save-new-task">Создать</button>
+                        </div>
                       </div>
                     </form>
+
+                    
                   </Drawer>
 
       </div>

@@ -49,6 +49,7 @@ function RegisterModal({ onClose }) {
                         placeholder="Логин"
                         value={login}
                         onChange={(e) => setLogin(e.target.value)}
+                        className='register-login'
                     />
 
                     <input 

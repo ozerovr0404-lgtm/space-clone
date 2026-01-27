@@ -1,10 +1,42 @@
 .form-fields {
-    margin-bottom: 10px;
+    margin-bottom: px;
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
+.form-in-drawer {
+    margin: 0;
+}
+
 .task-table {
     margin: 0 15px;
+}
+
+.down-grey-line {
+    display: flex;
+    justify-content: flex-end;
+    background-color: #f8f9ff;
+    margin: 410px 0px 0px 0px;
+}
+
+.clear-add-task-fields {
+    width: 90px;
+    height: 37px;
+    color: #2c3979;
+    background-color: #ffffff;
+    border-radius: 5px; 
+    margin: 9px 10px 10px 20px;
+    margin-left: auto;
+    font-size: 16px;
+    font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
+    cursor: pointer;
+    justify-content: start;
+    border: none;
+}
+
+.clear-but {
+    display: flex;
+    justify-content: start;
+    margin: 0px 0px 0px 10px 
 }
