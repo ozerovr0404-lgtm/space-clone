@@ -13,6 +13,7 @@ import TaskBodyField from '..//TaskBodyField/TaskBodyField';
 import TaskTableSorted from '..//TaskTableSorted/taskTableSorted.jsx';
 import './taskPage.css';
 import UserMenu from '../UserMenu/userMenu.jsx';
+import UserWindow from '../UserWindow/userWindow.jsx'
 
 
 
@@ -109,14 +110,21 @@ function TaskPage() {
     }
   });
 
+  const [isUserOpen, setIsUserOpen] = useState(false);
+
   return (
     <>
     
 
       <div className="app">
         <RigthPanel>
-          <UserMenu />
+          <UserMenu onClick={() => setIsUserOpen(prev => !prev)} />
         </RigthPanel>
+
+        <UserWindow
+          open={isUserOpen}
+          onClose={() => setIsUserOpen(false)}
+        />
 
         <BackgroundMain>
           <TopPanel>
@@ -179,9 +187,7 @@ function TaskPage() {
                         </div>
                       </div>
                     </form>
-
-                    
-                  </Drawer>
+                  </Drawer>              
 
       </div>
     </>

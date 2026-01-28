@@ -1,0 +1,52 @@
+.user-window {
+  position: fixed;
+  bottom: 20px;
+  left: 55px;
+  width: 250px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  padding: 8px 0;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+}
+
+.window-user-header {
+    background-color: #f5f6ff;
+    font-size: 18px;
+}
+
+.full-name {
+    border: 2px solid;
+    border-color: #f5f6ff;
+    border-radius: 6px;
+    margin: 5px 10px;
+    font-size: 18px;
+    height: 55px;
+}
+
+.user-id {
+    border: 2px solid;
+    border-color: #f5f6ff;
+    border-radius: 6px;
+    margin: 5px 10px;
+    font-size: 15px
+}
+
+.user-window-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+
+.menu-item {
+  display: block;
+  padding: 10px 14px;
+  color: #222;
+  text-decoration: none;
+}
+
+.menu-item:hover {
+  background: #f2f2f2;
+}
