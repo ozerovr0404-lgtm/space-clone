@@ -1,19 +1,20 @@
 import app from '../../App.css'
-import BackgroundMain from '..//backgroundMain/backgroundMain'
-import RigthPanel from '..//RightPanel/rightPanel';
-import TopPanel from '..//TopPanel/topPanel';
-import FindField from '..//FindField/findField';
-import TaskTitle from '..//TaskTitle/taskTitle';
-import TasksTable from '..//TasksTable/tasksTable';
+import BackgroundMain from '../backgroundMain/backgroundMain.jsx'
+import RigthPanel from '../RightPanel/rightPanel.jsx';
+import TopPanel from '../TopPanel/topPanel.jsx';
+import FindField from '../FindField/findField.jsx';
+import TaskTitle from '../TaskTitle/taskTitle.jsx';
+import TasksTable from '../TasksTable/tasksTable.jsx';
 import { useState, useEffect } from 'react';
-import Drawer from '..//DrawerAddTask/DrawerAddTask';
-import Creator from '..//CreatorForm/Creator';
-import TitleTaskField from '..//TitleField/TitleField';
-import TaskBodyField from '..//TaskBodyField/TaskBodyField';
-import TaskTableSorted from '..//TaskTableSorted/taskTableSorted.jsx';
+import Drawer from '../DrawerAddTask/DrawerAddTask.jsx';
+import Creator from '../CreatorForm/Creator.jsx';
+import TitleTaskField from '../TitleField/TitleField.jsx';
+import TaskBodyField from '../TaskBodyField/TaskBodyField.jsx';
+import TaskTableSorted from '../TaskTableSorted/taskTableSorted.jsx';
 import './taskPage.css';
 import UserMenu from '../UserMenu/userMenu.jsx';
 import UserWindow from '../UserWindow/userWindow.jsx'
+import { TASK_STATUSES } from '../../constants/taskStatus.jsx';
 
 
 
@@ -31,6 +32,8 @@ function TaskPage() {
   });
   const [tasks, setTasks] = useState([]);
   const [sortOrder, setSortOrder] = useState('desc');
+  const [status, setStatus] = useState('in_plans');
+
 
 
   useEffect(() => {
@@ -45,6 +48,7 @@ function TaskPage() {
     setCreator('');
     setTitle('');
     setBody('');
+    setStatus('in_plans');
   };
 
 
@@ -54,7 +58,8 @@ function TaskPage() {
     const newErrors = {
       creator: !creator.trim(),
       title: !title.trim(),
-      body: !body.trim()
+      body: !body.trim(),
+      status: !status.trim()
     };
     setErrors(newErrors);
 
@@ -62,8 +67,12 @@ function TaskPage() {
       return;
     }
 
-
-    const newTask = { creator, title, body }
+    const newTask = { 
+      creator, 
+      title, 
+      body, 
+      status 
+    }
 
     try {
       const response = await fetch('http://localhost:5000/tasks', {
@@ -147,7 +156,7 @@ function TaskPage() {
             />  
         
         <div className="task-table">
-          <TasksTable tasks={sortedTasks} />
+          <TasksTable tasks={sortedTasks} setTasks={setTasks}/>
         </div>
         
         </BackgroundMain>
@@ -176,6 +185,17 @@ function TaskPage() {
                             setErrors(prev => ({ ...prev, body: false }))
                           }} 
                           hasError={errors.body}/>
+                        <select
+                          value={status}
+                          onChange={(e) => setStatus(e.target.value)}
+                          className="task-status-select"
+                        >
+                          {TASK_STATUSES.map((s) => (
+                            <option key={s.value} value={s.value}>
+                              {s.label}
+                            </option>
+                          ))}
+                        </select>
                         
                         <div className='down-grey-line'> 
 

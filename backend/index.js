@@ -41,12 +41,29 @@ app.get('/', async (req, res) => {
 
 
  app.post('/tasks', async (req, res) => {
-    const { creator, title, body } = req.body;
+    const { 
+            creator, 
+            title, 
+            body, 
+            status 
+        } = req.body;
+
+    if (!creator || !title || !body) {
+        return res.status(400).json({ error: 'Все поля обязательны' })
+    }
+
+    const validStatuses = ['in_plans', 'in_progress', 'pause', 'done', 'canceled']
+    const taskStatus = validStatuses.includes(status) ? status : 'in_plans';
 
     try {
         const result = await pool.query(
-            `INSERT INTO tasks (creator, title, body) VALUES ($1, $2, $3) RETURNING *`,
-            [creator, title, body]
+            `INSERT INTO tasks (creator, title, body, status) VALUES ($1, $2, $3, $4) RETURNING *`,
+            [
+                creator, 
+                title, 
+                body, 
+                taskStatus
+            ]
         );
 
         console.log('Новая задача добавлена:' , result.rows[0]);
@@ -65,6 +82,36 @@ app.get('/', async (req, res) => {
  app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
  });
+
+
+// Для обновления статуса
+
+app.patch('/tasks/:id', async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const validStatuses = ['in_plans', 'in_progress', 'pause', 'done', 'canceled']
+    if (!validStatuses.includes(status)) {
+        return res.status(400).json({ error: 'Недопустимый статус' });
+    }
+
+    try {
+        const result = await pool.query(
+            `UPDATE tasks SET status = $1 WHERE id = $2 RETURNING *`,
+            [status, id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Задача не найдена' });
+        }
+
+        res.json({ task: result.rows[0] });
+    } catch (err) {
+        console.error('Ошибка при обновлении статусв', err)
+        res.status(500).json({ error: err.message })
+    }
+})
+
 
 // Добавляем роуты на регистр
 
@@ -89,7 +136,7 @@ app.post('/register', async (req, res) => {
         });
     } catch (err) {
         if (err.code === '23505') {
-            return res.status(400).json({ error: 'Такой лоигн уже существует' });
+            return res.status(400).json({ error: 'Такой логин уже существует' });
         }
 
         console.error(err);
