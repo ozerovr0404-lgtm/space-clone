@@ -48,7 +48,14 @@ function TasksTable({tasks, setTasks}) {
                                 value={TASK_STATUSES.find(o => o.value === task.status)}
                                 onChange={selected => handleStatusChange(task.id, selected.value)}
                                 options={TASK_STATUSES}
+                                menuPortalTarget={document.body}
+                                menuPosition='fixed'
+                                menuPlacement='auto'
                                 styles={{
+                                    menuPortal: base=> ({
+                                        ...base,
+                                        zIndex: 10
+                                    }),
                                     option: (provided, state) => ({
                                         ...provided,
                                         color: state.data.color,
