@@ -6,6 +6,10 @@ function RegisterModal({ onClose }) {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
+    const [first_name, setFirst_name] = useState('');
+    const [last_name, setLast_name] = useState('');
+    const [middle_name, setMiddle_name] = useState('');
+    const role = null;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,7 +20,7 @@ function RegisterModal({ onClose }) {
                 const response = await fetch('http://localhost:5000/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ login, password })
+                    body: JSON.stringify({ login, password, first_name, last_name, middle_name, role })
                 });
                 
                 const data = await response.json();
@@ -50,6 +54,30 @@ function RegisterModal({ onClose }) {
                         value={login}
                         onChange={(e) => setLogin(e.target.value)}
                         className='register-login'
+                    />
+
+                    <input
+                        type="text"
+                        placeholder="Фамилия"
+                        value={first_name}
+                        onChange={(e) => setFirst_name(e.target.value)}
+                        className='register-first-name'
+                    />
+
+                    <input
+                        type="text"
+                        placeholder="Имя"
+                        value={last_name}
+                        onChange={(e) => setLast_name(e.target.value)}
+                        className='register-last-name'
+                    />
+
+                    <input
+                        type="text"
+                        placeholder="Отчество"
+                        value={middle_name}
+                        onChange={(e) => setMiddle_name(e.target.value)}
+                        className='register-middle-name'
                     />
 
                     <input 

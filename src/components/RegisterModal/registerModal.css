@@ -17,10 +17,11 @@
   padding: 15px;
   border-radius: 8px;
   width: 350px;
-  height: 325px;
+  height: 510px;
   font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
   display: flex;
   flex-direction: column;
+  margin: 5px;
 }
 
 .register-form {
@@ -62,6 +63,42 @@
 }
 
 .register-login {
+    font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
+    height: 37px;
+    box-sizing: border-box;
+    padding: 0px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid rgb(233, 232, 232);
+    padding: 6px 12px;  
+    margin: 12px;
+}
+
+.register-first-name {
+    font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
+    height: 37px;
+    box-sizing: border-box;
+    padding: 0px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid rgb(233, 232, 232);
+    padding: 6px 12px;  
+    margin: 12px;
+}
+
+.register-last-name {
+    font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
+    height: 37px;
+    box-sizing: border-box;
+    padding: 0px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid rgb(233, 232, 232);
+    padding: 6px 12px;  
+    margin: 12px;
+}
+
+.register-middle-name {
     font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
     height: 37px;
     box-sizing: border-box;

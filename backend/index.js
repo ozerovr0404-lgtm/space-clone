@@ -5,10 +5,12 @@ const app = express();
 const PORT = 5000;
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
 const JWT_SECRET = 'super_secret_key_123';
+
 
 
 const pool = new Pool({
@@ -116,18 +118,33 @@ app.patch('/tasks/:id', async (req, res) => {
 // Добавляем роуты на регистр
 
 app.post('/register', async (req, res) => {
-    const { login, password } = req.body;
+    const { login, password, first_name, last_name, middle_name, role } = req.body;
 
-    if (!login || !password) {
-        return res.status(400).json({ error: 'Логин и пароль обязательны' });
+    // Проверка на англ символы и цифры
+    const ENG_SYMBOL = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_';
+
+    if (!login.split("").every(char => ENG_SYMBOL.includes(char))) {
+        return res.status(400).json({ error: 'Логин может содержать только латинские буквы и цифры!' })
     }
-
+    console.log(req.body)
+    // Проверка на путые поля
+    if (!first_name || !last_name || !login || !password) {
+        return res.status(400).json({ error: 'Логин, Фамилия, Имя и пароль обязательны' });
+    }
+    console.log(req.body)
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const result = await pool.query(
-            'INSERT INTO users (login, password) VALUES ($1, $2) RETURNING id, login, created_at',
-            [login, hashedPassword]
+            'INSERT INTO users (login, password, first_name, last_name, middle_name, role) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, login, created_at, first_name, last_name, middle_name, role',
+            [
+                login, 
+                hashedPassword,
+                first_name,
+                last_name,
+                middle_name || null,
+                role || null
+            ]
         );
 
         res.json({
@@ -138,7 +155,6 @@ app.post('/register', async (req, res) => {
         if (err.code === '23505') {
             return res.status(400).json({ error: 'Такой логин уже существует' });
         }
-
         console.error(err);
         res.status(500).json({ error: 'Ошибка сервера' });
     }
