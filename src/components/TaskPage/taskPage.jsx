@@ -15,6 +15,7 @@ import './taskPage.css';
 import UserMenu from '../UserMenu/userMenu.jsx';
 import UserWindow from '../UserWindow/userWindow.jsx'
 import { TASK_STATUSES } from '../../constants/taskStatus.jsx';
+import Select from 'react-select';
 
 
 
@@ -185,18 +186,10 @@ function TaskPage() {
                             setErrors(prev => ({ ...prev, body: false }))
                           }} 
                           hasError={errors.body}/>
-                        <select
-                          value={status}
-                          onChange={(e) => setStatus(e.target.value)}
-                          className="task-status-select"
-                        >
-                          {TASK_STATUSES.map((s) => (
-                            <option key={s.value} value={s.value}>
-                              {s.label}
-                            </option>
-                          ))}
-                        </select>
                         
+                        
+                        
+
                         <div className='down-grey-line'> 
 
                           <div className='clear-but'>

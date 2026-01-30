@@ -1,7 +1,8 @@
 import './userWindow.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function UserWindow({ open, onClose }) {
+    const navigate = useNavigate();
 
     if (!open) return null;
 
@@ -24,9 +25,26 @@ function UserWindow({ open, onClose }) {
         },
         {
             label: "Выйти",
-            path: "/login"
+            action: "logout"
         },
     ]
+
+    const handleItemClick = (item) => {
+        
+        if (item.action === 'logout') {
+            localStorage.removeItem('token');
+            onClose();
+            console.log('Проверяем логаут')
+            navigate('/login')
+            return
+        }
+
+        if (item.path) {
+            navigate(item.path);
+            onClose();
+            console.log('Не равен логауту')
+        }
+    }    
 
     return (
         <>
@@ -44,16 +62,14 @@ function UserWindow({ open, onClose }) {
                 </div>
 
                 <div className='user-min-menu'>
-                    {menuItems.map((item) => (
-                        <Link
-                            key={item.path}
-                            to={item.path}
+                    {menuItems.map((item, index) => (
+                        <div
+                            key={index}
                             className="menu-item"
-                            target="_blank"
-                            onclick={onClose}
+                            onClick={() => handleItemClick(item)}
                         >
                             {item.label}
-                        </Link>
+                        </div>
                     ))}
                 </div>
             </div>
