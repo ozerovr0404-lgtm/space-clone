@@ -1,6 +1,10 @@
 import './DrawerFilter.css';
+import { useState } from 'react';
+import StatusSelect from '../StatusSelect/statusSelect';
 
-function DrawerFilter( {open, onClose, children} ) {
+function DrawerFilter( {open, onClose, onApply} ) {
+    const [status, setStatus] = useState(null)
+
     return (
         <>
             {open && <div className='drawer-backdrop-filter' onClick={onClose} />}
@@ -19,7 +23,22 @@ function DrawerFilter( {open, onClose, children} ) {
                 </div>
 
                 <div className='drawer-filter-body'>
-                    {children}
+                    <StatusSelect
+                        value={status}
+                        onChange={setStatus}
+                    />
+                    <div className='down-line'>
+                        <button 
+                            type="button" 
+                            className="apply-filter"
+                            onClick={() => {
+                                onApply({ status })
+                                onClose()
+                            }}
+                        >
+                            Применить
+                        </button>
+                    </div>
                 </div>
             </div>
         </>

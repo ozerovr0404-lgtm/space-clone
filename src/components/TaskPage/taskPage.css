@@ -15,6 +15,7 @@
 
 .down-grey-line {
     display: flex;
+    flex-direction: row;
     justify-content: flex-end;
     background-color: #f8f9ff;
     margin: 410px 0px 0px 0px;

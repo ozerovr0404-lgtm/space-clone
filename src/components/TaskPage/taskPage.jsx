@@ -32,6 +32,7 @@ function TaskPage() {
   const [sortOrder, setSortOrder] = useState('desc');
   const [status, setStatus] = useState('in_plans');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [filterStatus, setFilterStatus] = useState(null);
 
 
 
@@ -106,8 +107,14 @@ function TaskPage() {
     .catch(err => console.error(err));
   }, [])
   
+  const filteredTasks = tasks.filter(task => {
+    if (filterStatus && task.status !== filterStatus) {
+      return false;
+    }
+    return true;
+  });
 
-  const sortedTasks = [...tasks].sort((a, b) => {
+  const sortedTasks = [...filteredTasks].sort((a, b) => {
     const dateA = new Date(a.created_at);
     const dateB = new Date(b.created_at);
 
@@ -202,9 +209,13 @@ function TaskPage() {
                       </div>
                     </form>
                   </DrawerAddTask>              
-                  
-                  <DrawerFilter open={isFilterOpen} onClose={() => setIsFilterOpen(false)}>
-                    
+                    <DrawerFilter 
+                      open={isFilterOpen} 
+                      onClose={() => setIsFilterOpen(false)}
+                      onApply={({ status }) => {
+                        setFilterStatus(status);
+                      }}
+                      >
                   </DrawerFilter>
       </div>
     </>
