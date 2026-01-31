@@ -1,5 +1,4 @@
 import { TASK_STATUSES } from '../../constants/taskStatus';
-import BackgroundMain from '../backgroundMain/backgroundMain';
 import './tasksTable.css';
 import Select from 'react-select';
 

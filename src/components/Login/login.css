@@ -1,11 +1,23 @@
+.login-page-body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.backgorund-login-page {
+    display: flex;
+    flex-direction: column;
+}
+
 .login-page {
     display: flex;
     flex-direction: column;
     width: 450px;
     height: 400px;
+    margin: 0px;
     justify-content: center;
-    margin: auto;
-    margin-top: 170px;
     align-items: center;
 }
 
@@ -24,6 +36,7 @@ h2 {
     width: 380px;
     height: 180px;
     padding: 10px;
+    background-color: #eff2ff;
 }
 
 .login-text {

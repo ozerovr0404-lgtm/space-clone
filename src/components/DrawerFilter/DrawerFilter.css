@@ -1,8 +1,8 @@
-.drawer {
+.drawer-filter {
     position: fixed;
     top: 0;
     right: 0;
-    width: 50%;
+    width: 25%;
     height: 100vh;
     background: #ffffff;
     transition: transform .5s ease;
@@ -14,11 +14,11 @@
     font-size: 13px;
 }
 
-.drawer-open {
+.drawer-filter-open {
     transform: translateX(0%);
 }
 
-.drawer-header {
+.drawer-filter-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -34,12 +34,29 @@ h2 {
     margin: 10px;
 }
 
-.drawer-body {
-    padding: 15px;
-    overflow: auto;
+.close-filter-cross {
+    background: #ffffff;
+    padding: 0;
+    margin: 0;
+    border: none;
+    fill: #2c3979;
+    cursor: pointer;
 }
 
-.add-tasks {
+.drawer-backdrop-filter {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 60;
+    transition: opacity 0.3s ease;
+}
+
+.drawer-backdrop-filter-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.tasks-filter {
     width: 185px;
     height: 37px;
     color: rgb(255, 255, 255);
@@ -50,41 +67,4 @@ h2 {
     font-size: 16px;
     font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
     cursor: pointer;
-}
-
-.drawer-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.35);
-    z-index: 60;
-    transition: opacity 0.3s ease;
-}
-
-.drawer-backdrop-hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.close-cross {
-    background: #ffffff;
-    padding: 0;
-    margin: 0;
-    border: none;
-    fill: #2c3979;
-    cursor: pointer;
-}
-
-.save-new-task {
-    width: 90px;
-    height: 37px;
-    color: #ffffff;
-    background-color: #2c3979;
-    border-radius: 5px; 
-    margin: 9px 10px 10px 20px;
-    margin-left: auto;
-    font-size: 16px;
-    font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
-    cursor: pointer;
-    justify-content: start;
-    border: none;
 }

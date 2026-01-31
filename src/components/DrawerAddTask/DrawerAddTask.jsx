@@ -2,7 +2,7 @@ import "./DrawerAddTask.css";
 
 
 
-function Drawer({ open, onClose, children }) {
+function DrawerAddTask({ open, onClose, children }) {
     return (
 
         <>
@@ -30,4 +30,4 @@ function Drawer({ open, onClose, children }) {
     );
 }
 
-export default Drawer;
+export default DrawerAddTask;

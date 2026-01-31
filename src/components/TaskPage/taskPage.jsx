@@ -1,4 +1,3 @@
-import app from '../../App.css'
 import BackgroundMain from '../backgroundMain/backgroundMain.jsx'
 import RigthPanel from '../RightPanel/rightPanel.jsx';
 import TopPanel from '../TopPanel/topPanel.jsx';
@@ -6,7 +5,7 @@ import FindField from '../FindField/findField.jsx';
 import TaskTitle from '../TaskTitle/taskTitle.jsx';
 import TasksTable from '../TasksTable/tasksTable.jsx';
 import { useState, useEffect } from 'react';
-import Drawer from '../DrawerAddTask/DrawerAddTask.jsx';
+import DrawerAddTask from '../DrawerAddTask/DrawerAddTask.jsx';
 import Creator from '../CreatorForm/Creator.jsx';
 import TitleTaskField from '../TitleField/TitleField.jsx';
 import TaskBodyField from '../TaskBodyField/TaskBodyField.jsx';
@@ -14,9 +13,7 @@ import TaskTableSorted from '../TaskTableSorted/taskTableSorted.jsx';
 import './taskPage.css';
 import UserMenu from '../UserMenu/userMenu.jsx';
 import UserWindow from '../UserWindow/userWindow.jsx'
-import { TASK_STATUSES } from '../../constants/taskStatus.jsx';
-import Select from 'react-select';
-
+import DrawerFilter from '../DrawerFilter/DrawerFilter.jsx'
 
 
 function TaskPage() {
@@ -34,6 +31,7 @@ function TaskPage() {
   const [tasks, setTasks] = useState([]);
   const [sortOrder, setSortOrder] = useState('desc');
   const [status, setStatus] = useState('in_plans');
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
 
 
@@ -141,6 +139,9 @@ function TaskPage() {
             <div className="top-panel-left">
               <TaskTitle />
               <FindField />
+              <button onClick={() => setIsFilterOpen(true)} className="tasks-filter">
+                Фильтр
+              </button>
             </div>
 
             <div className="top-panel-right">
@@ -161,7 +162,7 @@ function TaskPage() {
         </div>
         
         </BackgroundMain>
-                  <Drawer open={open} onClose={() => setOpen(false)}>
+                  <DrawerAddTask open={open} onClose={() => setOpen(false)}>
                     <form onSubmit={handleSubmit} className='form-in-drawer'>
                       <div className='form-fields'>
                         <Creator 
@@ -200,12 +201,14 @@ function TaskPage() {
                         </div>
                       </div>
                     </form>
-                  </Drawer>              
-
+                  </DrawerAddTask>              
+                  
+                  <DrawerFilter open={isFilterOpen} onClose={() => setIsFilterOpen(false)}>
+                    
+                  </DrawerFilter>
       </div>
     </>
   );
 }
 
 export default TaskPage;
-

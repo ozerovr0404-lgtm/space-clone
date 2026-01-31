@@ -43,37 +43,41 @@ function Login() {
 
 
     return (
-        <div className="login-page">
-            <h2 className="auth-title">Авторизация</h2>
+    <div className='login-page-body'>
+        <div className='backgorund-login-page'>
+            <div className="login-page">
+                <h2 className="auth-title">Авторизация</h2>
 
-            <form onSubmit={handleSubmit} className="login-form">
-                    <input
-                        className="login-text"
-                        type="text"
-                        placeholder="Логин"
-                        value={login}
-                        onChange={(e) => setLogin(e.target.value)}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Пароль"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                <form onSubmit={handleSubmit} className="login-form">
+                        <input
+                            className="login-text"
+                            type="text"
+                            placeholder="Логин"
+                            value={login}
+                            onChange={(e) => setLogin(e.target.value)}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Пароль"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
 
-                <button type="submit" className="auth-button">Войти</button>
-            </form>
+                    <button type="submit" className="auth-button">Войти</button>
+                </form>
 
-            <button type="button" onClick={() => setOpenRegister(true)} className="register-button">
-                Зарегистрироваться
-            </button>
+                <button type="button" onClick={() => setOpenRegister(true)} className="register-button">
+                    Зарегистрироваться
+                </button>
 
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+                {error && <p style={{ color: 'red' }}>{error}</p>}
 
-            {openRegister && (
-                <RegisterModal onClose={() => setOpenRegister(false)} />
-            )}
+                {openRegister && (
+                    <RegisterModal onClose={() => setOpenRegister(false)} />
+                )}
+            </div>
         </div>
+    </div>
     );
 }
 
