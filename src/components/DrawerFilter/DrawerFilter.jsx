@@ -3,7 +3,7 @@ import { useState } from 'react';
 import StatusSelect from '../StatusSelect/statusSelect';
 
 function DrawerFilter( {open, onClose, onApply} ) {
-    const [status, setStatus] = useState(null)
+    const [status, setStatus] = useState(null);
 
     return (
         <>
@@ -28,6 +28,18 @@ function DrawerFilter( {open, onClose, onApply} ) {
                         onChange={setStatus}
                     />
                     <div className='down-line'>
+                        <button
+                            type="button"
+                            className="reset-filtered"
+                            onClick={() => {
+                                setStatus(null)
+                                onApply({ status: null })
+                                onClose()
+                            }}
+                        >
+                            Сбросить
+                        </button>
+                        
                         <button 
                             type="button" 
                             className="apply-filter"
