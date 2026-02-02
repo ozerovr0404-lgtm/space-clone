@@ -24,67 +24,78 @@ function TasksTable({tasks, setTasks}) {
         }
     }
     return (
-        <table className='table-fixed'>
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>Создатель</th>
-                    <th>Заголовок</th>
-                    <th>Тело задачи</th>
-                    <th>Статус</th>
-                    <th>Дата и время создания</th>
-                </tr>
-            </thead>
-            <tbody>
-                {tasks.map(task => (
-                    <tr key={task.id}>
-                        <td>{task.id}</td>
-                        <td>{task.creator}</td>
-                        <td>{task.title}</td>
-                        <td>{task.body}</td>
-                        <td>
-                            <Select
-                                value={TASK_STATUSES.find(o => o.value === task.status)}
-                                onChange={selected => handleStatusChange(task.id, selected.value)}
-                                options={TASK_STATUSES}
-                                menuPortalTarget={document.body}
-                                menuPosition='fixed'
-                                menuPlacement='auto'
-                                styles={{
-                                    menuPortal: base=> ({
-                                        ...base,
-                                        zIndex: 10
-                                    }),
-                                    option: (provided, state) => ({
-                                        ...provided,
-                                        color: state.data.color,
-                                        backgroundColor: state.isFocused ? '#eee' : 'white'
-                                    }),
-                                    singleValue: (provided, state) => ({
-                                        ...provided,
-                                        color: state.data.color
-                                    }),
-                                    control: (provided) => ({
-                                        ...provided,
-                                        minWidth: 160,
-                                        borderRadius: 6,
-                                        borderColor: '#606381ff',
-                                    })
-                                }}
-                            />
-                        </td>
-                        <td>{new Date(task.created_at).toLocaleString('ru-RU', {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            second: '2-digit'
-                        })}</td>
+        <div className="table-wrapper">
+            <table className='table-fixed'>
+                <colgroup>
+                    <col style={{ width: '60px' }} />
+                    <col style={{ width: '130px' }} />
+                    <col style={{ width: '200px' }} />
+                    <col style={{ width: 'auto' }} />
+                    <col style={{ width: '180px' }} />
+                    <col style={{ width: '150px' }} />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Создатель</th>
+                        <th>Заголовок</th>
+                        <th>Тело задачи</th>
+                        <th>Статус</th>
+                        <th>Дата и время создания</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {tasks.map(task => (
+                        <tr key={task.id}>
+                            <td>{task.id}</td>
+                            <td>{task.creator}</td>
+                            <td>{task.title}</td>
+                            <td>{task.body}</td>
+                            <td>
+                                <Select
+                                    value={TASK_STATUSES.find(o => o.value === task.status)}
+                                    onChange={selected => handleStatusChange(task.id, selected.value)}
+                                    options={TASK_STATUSES}
+                                    menuPortalTarget={document.body}
+                                    menuPosition='fixed'
+                                    menuPlacement='auto'
+                                    styles={{
+                                        menuPortal: base=> ({
+                                            ...base,
+                                            zIndex: 10
+                                        }),
+                                        option: (provided, state) => ({
+                                            ...provided,
+                                            color: state.data.color,
+                                            backgroundColor: state.isFocused ? '#eee' : 'white'
+                                        }),
+                                        singleValue: (provided, state) => ({
+                                            ...provided,
+                                            color: state.data.color
+                                        }),
+                                        control: (provided) => ({
+                                            ...provided,
+                                            width: '100%',
+                                            minHeight: 36,
+                                            borderRadius: 6,
+                                            borderColor: '#606381ff',
+                                        })
+                                    }}
+                                />
+                            </td>
+                            <td>{new Date(task.created_at).toLocaleString('ru-RU', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit'
+                            })}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     )
 }
 
