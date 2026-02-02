@@ -37,6 +37,13 @@ function DrawerFilter( {open, onClose, onApply} ) {
                                 onClose()
                             }}
                         >
+                            <img
+                            src="/cross-svgrepo-com.svg" /*Это кнопка "крестик" для закрытия дровера*/
+                            alt="Close"
+                            width={23}
+                            height={25}
+                            className='button-close-cross'
+                        />
                             Сбросить
                         </button>
                         

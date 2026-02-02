@@ -6,6 +6,7 @@ table {
     font-size: 1rem;
     letter-spacing: 1px;
     margin: 5px 0px 40px 50px;
+    width: 1825px;
 }
 
 thead {
@@ -16,6 +17,7 @@ thead th, tbody td {
     border: 1px solid rgb(240, 240, 240);
     padding: 15px 10px;
     text-align: left;
+    max-width: 1400px;
 }
 
 tbody tr:nth-child(even) {
@@ -25,3 +27,4 @@ tbody tr:nth-child(even) {
 tbody tr:nth-child(odd) {
     background-image: #fff;
 }
+

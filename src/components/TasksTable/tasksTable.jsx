@@ -24,7 +24,7 @@ function TasksTable({tasks, setTasks}) {
         }
     }
     return (
-        <table>
+        <table className='table-fixed'>
             <thead>
                 <tr>
                     <th>id</th>
