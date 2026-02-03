@@ -1,12 +1,12 @@
 .form-fields {
-    margin-bottom: px;
+    padding: 0px;
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
 .form-in-drawer {
-    margin: 0;
+    margin: 0px;
 }
 
 .task-table {
@@ -18,7 +18,10 @@
     flex-direction: row;
     justify-content: flex-end;
     background-color: #f8f9ff;
-    margin: 410px 0px 0px 0px;
+    margin: 830px 0px 0px 0px;
+    position: fixed;
+    width: 935px;
+    z-index: 900;
 }
 
 .clear-add-task-fields {
@@ -27,7 +30,7 @@
     color: #2c3979;
     background-color: #ffffff;
     border-radius: 5px; 
-    margin: 9px 10px 10px 20px;
+    margin: 10px 10px 10px 20px;
     margin-left: auto;
     font-size: 16px;
     font-family: Roboto, PT Sans, helvetica, arial, sans-serif;

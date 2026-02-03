@@ -72,11 +72,13 @@ h2 {
 }
 
 .down-line {
+    position: fixed;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     background-color: #f8f9ff;
-    margin: 800px 0px;
+    margin: 840px 0px;
+    width: 475px;
 }
 
 .drawer-filter-body {

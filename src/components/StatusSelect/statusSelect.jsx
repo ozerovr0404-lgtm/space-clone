@@ -4,6 +4,7 @@ import { TASK_STATUSES } from '../../constants/taskStatus';
 function StatusSelect({ value, onChange }) {
     return (
         <Select 
+            className='status-select-in-drower-filter'
             value={TASK_STATUSES.find(o => o.value === value) || null}
             onChange={option => onChange(option?.value || null)}
             options={TASK_STATUSES}
@@ -26,9 +27,11 @@ function StatusSelect({ value, onChange }) {
                 }),
                 control: (provided) => ({
                 ...provided,
-                minWidth: 160,
+                width: 350,
                 borderRadius: 6,
                 borderColor: '#606381ff',
+                cursor: 'pointer',
+                margin: '30px 30px 0px'
                 })
             }}
             isClearable
