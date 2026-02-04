@@ -10,7 +10,7 @@ function FindField({ onSearch }) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='form-fint-tasks'>
             <input
                 className="find-field" 
                 type="text"

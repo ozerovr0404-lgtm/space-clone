@@ -2,7 +2,7 @@
     padding: 0px;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 940px;
 }
 
 .form-in-drawer {
@@ -18,9 +18,9 @@
     flex-direction: row;
     justify-content: flex-end;
     background-color: #f8f9ff;
-    margin: 830px 0px 0px 0px;
+    margin: 845px 0px 0px 0px;
     position: fixed;
-    width: 935px;
+    width: 950px;
     z-index: 900;
 }
 
@@ -42,6 +42,6 @@
 .clear-but {
     display: flex;
     justify-content: start;
-    margin: 0px 0px 0px 10px 
+    margin: 0px 0px 0px 20px 
 }
 
