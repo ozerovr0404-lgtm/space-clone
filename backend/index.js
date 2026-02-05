@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'super_secret_key_123';
-
+const { Task } = require('./models/Task');
 
 
 const pool = new Pool({
@@ -98,16 +98,15 @@ app.patch('/tasks/:id', async (req, res) => {
     }
 
     try {
-        const result = await pool.query(
-            `UPDATE tasks SET status = $1 WHERE id = $2 RETURNING *`,
-            [status, id]
-        );
+        const task = await Task.getById(id);
 
-        if (result.rows.length === 0) {
+        if (!task) {
             return res.status(404).json({ error: 'Задача не найдена' });
         }
 
-        res.json({ task: result.rows[0] });
+        const updateTask = await task.ChangeStatus(status);
+
+        res.json({ task: updateTask });
     } catch (err) {
         console.error('Ошибка при обновлении статусв', err)
         res.status(500).json({ error: err.message })
@@ -115,7 +114,7 @@ app.patch('/tasks/:id', async (req, res) => {
 })
 
 
-// Добавляем роуты на регистр
+// Добавляем роуты на регистрацию
 
 app.post('/register', async (req, res) => {
     const { login, password, first_name, last_name, middle_name, role } = req.body;
