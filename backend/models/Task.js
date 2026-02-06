@@ -1,4 +1,4 @@
-import pool from '..bd.js';
+import pool from '../bd.js';
 
 export class Task {
     constructor({ id, title, creator, created_at, body, status }) {
@@ -43,7 +43,7 @@ export class Task {
     }
 
     // Обновление статуса задачи через отдельный метод
-    async ChangeStatus(newStatus) {
+    async changeStatus(newStatus) {
         const result = await pool.query(
             `UPDATE tasks
             SET status =$1

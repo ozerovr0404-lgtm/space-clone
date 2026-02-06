@@ -1,25 +1,15 @@
-const express = require('express');
-const cors = require('cors');
-const { Pool } = require('pg');
+import pool from './bd.js';
+import express from 'express';
+import cors from 'cors';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 const app = express();
 const PORT = 5000;
+const JWT_SECRET = 'super_secret_key_123';
+import { Task } from './models/Task.js';
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const JWT_SECRET = 'super_secret_key_123';
-const { Task } = require('./models/Task');
-
-
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'my_space_clone_app_db',
-    password: 'Veronica0404',
-    port: 5432
-});
 
 
 app.get('/', async (req, res) => {
@@ -104,7 +94,7 @@ app.patch('/tasks/:id', async (req, res) => {
             return res.status(404).json({ error: 'Задача не найдена' });
         }
 
-        const updateTask = await task.ChangeStatus(status);
+        const updateTask = await task.changeStatus(status);
 
         res.json({ task: updateTask });
     } catch (err) {
