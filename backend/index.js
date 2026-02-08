@@ -3,10 +3,12 @@ import express from 'express';
 import cors from 'cors';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { Task } from './models/Task.js';
+
 const app = express();
 const PORT = 5000;
 const JWT_SECRET = 'super_secret_key_123';
-import { Task } from './models/Task.js';
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -32,15 +34,30 @@ app.get('/', async (req, res) => {
  });
 
 
+ app.get('/users', async (req, res) => {
+    try {
+        const result = await pool.query(
+            'SELECT id, first_name, last_name FROM users ORDER BY last_name'
+        );
+    
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
  app.post('/tasks', async (req, res) => {
-    const { 
-            creator, 
+    const {  
             title, 
             body, 
-            status 
+            status,
+            assignee_id
         } = req.body;
 
-    if (!creator || !title || !body) {
+    const creator_id = req.user.id;
+
+    if (!title || !body) {
         return res.status(400).json({ error: 'Все поля обязательны' })
     }
 
@@ -49,12 +66,13 @@ app.get('/', async (req, res) => {
 
     try {
         const result = await pool.query(
-            `INSERT INTO tasks (creator, title, body, status) VALUES ($1, $2, $3, $4) RETURNING *`,
-            [
-                creator, 
+            `INSERT INTO tasks (creator, title, body, status, creator_id, assignee_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+            [ 
                 title, 
                 body, 
-                taskStatus
+                taskStatus,
+                creator_id,
+                assignee_id
             ]
         );
 
@@ -196,4 +214,3 @@ app.post('/login', async (req, res) => {
         res.status(500).json({ error: 'Ошибка сервера' });
     }
 });
-

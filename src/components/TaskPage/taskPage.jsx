@@ -14,6 +14,7 @@ import './taskPage.css';
 import UserMenu from '../UserMenu/userMenu.jsx';
 import UserWindow from '../UserWindow/userWindow.jsx'
 import DrawerFilter from '../DrawerFilter/DrawerFilter.jsx'
+import UserSelect from '../UserSelect/userSelect.jsx';
 
 
 function TaskPage() {
@@ -21,6 +22,8 @@ function TaskPage() {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState(null);
   const [creator, setCreator] = useState('');
+  const [creatorId, setCreatorId] = useState(null);
+  const [assigneeId, setAssigneeId] = useState(null);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [errors, setErrors] = useState({
@@ -33,7 +36,7 @@ function TaskPage() {
   const [status, setStatus] = useState('in_plans');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterStatus, setFilterStatus] = useState(null);
-
+  const [users, setUsers] = useState([]);
 
 
   useEffect(() => {
@@ -43,11 +46,21 @@ function TaskPage() {
     .catch(err => console.error(err));
   }, []);
 
+  useEffect(() => {
+    fetch('http://localhost:5000/users')
+      .then(res => res.json())
+      .then( data => {
+        console.log('USERS:', data);
+        setUsers(data);
+      })
+      .catch(err => console.error('Ошибка загрузки пользователей', err));
+  })
+
 
   const clearAddTaskField = () => {
-    setCreator('');
-    setTitle('');
-    setBody('');
+    setCreatorId(null);
+    setTitle(null);
+    setBody(null);
     setStatus('in_plans');
   };
 
@@ -68,10 +81,10 @@ function TaskPage() {
     }
 
     const newTask = { 
-      creator, 
       title, 
       body, 
-      status 
+      status,
+      assignee_id: assigneeId 
     }
 
     try {
@@ -172,12 +185,10 @@ function TaskPage() {
                   <DrawerAddTask open={open} onClose={() => setOpen(false)}>
                     <form onSubmit={handleSubmit} className='form-in-drawer'>
                       <div className='form-fields'>
-                        <Creator 
-                          value={creator} 
-                          onChange={(val) => {
-                          setCreator(val);
-                          setErrors(prev => ({ ...prev, creator: false }));
-                        }} 
+                        <UserSelect
+                          users={users}
+                          value={assigneeId}
+                          onChange={setAssigneeId} 
                           hasError={errors.creator}/>
 
                         <TitleTaskField 

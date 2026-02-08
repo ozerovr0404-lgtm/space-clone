@@ -1,21 +1,23 @@
 import pool from '../bd.js';
 
 export class Task {
-    constructor({ id, title, creator, created_at, body, status }) {
+    constructor({ id, title, creator, created_at, body, status, creator_id, assignee_id }) {
         this.id = id;
         this.title = title;
         this.creator = creator;
         this.created_at = created_at;
         this.body = body;
-        this.status = status ?? 'in_plans'
+        this.status = status ?? 'in_plans';
+        this.creator_id = creator_id;
+        this.assignee_id = assignee_id 
     }
 
     // Создание новой задачи
-    static async create({ title, creator, body, status = 'in_plans' }) {
+    static async create({ title, creator, body, status = 'in_plans', creator_id, assignee_id }) {
         const result = await pool.query(
-            `INSERT INTO tasks (title, creator, body, status)
-            VALUES ($1, $2, $3, $4) RETURNING *`,
-            [title, creator, body, status]
+            `INSERT INTO tasks (title, creator, body, status, creator_id, assignee_id)
+            VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+            [title, creator, body, status, creator_id, assignee_id]
         );
         return new Task(result.rows[0]);
     }
