@@ -7,13 +7,27 @@ function TasksTable({tasks, setTasks}) {
     const handleStatusChange = async (taskId, newStatus) => {
         
         try {
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                console.error('Нет токена!');
+                return;
+            }
+
             const res = await fetch(`http://localhost:5000/tasks/${taskId}`, {
                 method: 'PATCH', //для частичного обновления
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                 },
                 body: JSON.stringify({ status: newStatus })
             });
 
             const updateTask = await res.json();
+            if (!res.ok) {
+                console.error('Ошибка сервера при обновлении задачи:', updateTask.error);
+                return;
+            }
             console.log('Обновлённая задача:', updateTask)
 
             setTasks(prevTasks => 
@@ -46,6 +60,7 @@ function TasksTable({tasks, setTasks}) {
                 </thead>
                 <tbody>
                     {tasks.map(task => (
+                        task ? (
                         <tr key={task.id}>
                             <td>{task.id}</td>
                             <td>{task.creator}</td>
@@ -54,7 +69,7 @@ function TasksTable({tasks, setTasks}) {
                             <td>
                                 <Select
                                     value={TASK_STATUSES.find(o => o.value === task.status)}
-                                    onChange={selected => handleStatusChange(task.id, selected.value)}
+                                    onChange={selected => handleStatusChange(task.id, selected?.value || null)}
                                     options={TASK_STATUSES}
                                     menuPortalTarget={document.body}
                                     menuPosition='fixed'
@@ -62,7 +77,7 @@ function TasksTable({tasks, setTasks}) {
                                     styles={{
                                         menuPortal: base=> ({
                                             ...base,
-                                            zIndex: 10
+                                            zIndex: 1000
                                         }),
                                         option: (provided, state) => ({
                                             ...provided,
@@ -92,6 +107,7 @@ function TasksTable({tasks, setTasks}) {
                                 second: '2-digit'
                             })}</td>
                         </tr>
+                        ) : null
                     ))}
                 </tbody>
             </table>

@@ -4,6 +4,7 @@ import cors from 'cors';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Task } from './models/Task.js';
+import auth from './middleware/auth.js';
 
 const app = express();
 const PORT = 5000;
@@ -13,6 +14,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+app.get('/me', auth, (req, res) => {  // тестовый роут
+    res.json(req.user);
+});
 
 app.get('/', async (req, res) => {
     try {
@@ -47,7 +52,7 @@ app.get('/', async (req, res) => {
 });
 
 
- app.post('/tasks', async (req, res) => {
+ app.post('/tasks', auth, async (req, res) => {
     const {  
             title, 
             body, 
@@ -57,7 +62,7 @@ app.get('/', async (req, res) => {
 
     const creator_id = req.user.id;
 
-    if (!title || !body) {
+    if (!title || !body || !assignee_id) {
         return res.status(400).json({ error: 'Все поля обязательны' })
     }
 
@@ -66,7 +71,8 @@ app.get('/', async (req, res) => {
 
     try {
         const result = await pool.query(
-            `INSERT INTO tasks (creator, title, body, status, creator_id, assignee_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+            console.log('req.user:', req.user)
+            `INSERT INTO tasks (title, body, status, creator_id, assignee_id) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
             [ 
                 title, 
                 body, 
@@ -76,7 +82,6 @@ app.get('/', async (req, res) => {
             ]
         );
 
-        console.log('Новая задача добавлена:' , result.rows[0]);
 
         res.json({
             message: 'Задача успешно сохранена!',
@@ -116,7 +121,7 @@ app.patch('/tasks/:id', async (req, res) => {
 
         res.json({ task: updateTask });
     } catch (err) {
-        console.error('Ошибка при обновлении статусв', err)
+        console.error('Ошибка при обновлении статуса', err)
         res.status(500).json({ error: err.message })
     }
 })

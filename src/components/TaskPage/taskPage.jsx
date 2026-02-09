@@ -21,13 +21,11 @@ function TaskPage() {
   
   const [open, setOpen] = useState(false);
   const [data, setData] = useState(null);
-  const [creator, setCreator] = useState('');
-  const [creatorId, setCreatorId] = useState(null);
   const [assigneeId, setAssigneeId] = useState(null);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [errors, setErrors] = useState({
-    creator: false,
+    assignee: false,
     title: false,
     body: false
   });
@@ -37,7 +35,7 @@ function TaskPage() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterStatus, setFilterStatus] = useState(null);
   const [users, setUsers] = useState([]);
-
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     fetch('http://localhost:5000/')
@@ -47,20 +45,31 @@ function TaskPage() {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:5000/users')
-      .then(res => res.json())
-      .then( data => {
+    const fetchUsers = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await fetch('http://localhost:5000/users', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          }
+        });
+        const data = await res.json();
         console.log('USERS:', data);
         setUsers(data);
-      })
-      .catch(err => console.error('Ошибка загрузки пользователей', err));
-  })
+      } catch (err) {
+        console.error('Ошибка при получении пользователей', err);
+      }
+    };
+
+    fetchUsers();
+  }, [token]);
 
 
   const clearAddTaskField = () => {
-    setCreatorId(null);
-    setTitle(null);
-    setBody(null);
+    setAssigneeId(null);
+    setTitle('');
+    setBody('');
     setStatus('in_plans');
   };
 
@@ -69,44 +78,49 @@ function TaskPage() {
     event.preventDefault();
 
     const newErrors = {
-      creator: !creator.trim(),
+      assignee: !assigneeId,
       title: !title.trim(),
       body: !body.trim(),
       status: !status.trim()
     };
     setErrors(newErrors);
 
-    if (newErrors.creator || newErrors.title || newErrors.body) {
+    if (newErrors.assignee || newErrors.title || newErrors.body) {
       return;
     }
 
-    const newTask = { 
-      title, 
-      body, 
-      status,
-      assignee_id: assigneeId 
-    }
+    const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('Нет токена, необходимо авторизоваться');
+        return;
+      }
 
     try {
       const response = await fetch('http://localhost:5000/tasks', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(newTask)
+        body: JSON.stringify({
+          title, 
+          body, 
+          status, 
+          assignee_id: assigneeId
+        })
       });
 
 
       const result = await response.json();
       console.log('Ответ сервера', result);
 
-      setTasks(prevTasks => [result.task, ...prevTasks]);
-      setCreator('');
-      setTitle('');
-      setBody('');
-      setErrors({ creator: false, title: false, body: false });
-      setOpen(false);
-
+      if (response.ok && result.task) {
+        setTasks(prev => [result.task, ...prev]);
+        clearAddTaskField();
+        setOpen(false)
+      } else {
+        console.error('Ошибка при создании задачи:', result.error || 'Неизвестная ошибка');
+      }
     } catch (err) {
       console.error('Ошибка при добавлении задачи', err);
     }    
@@ -114,11 +128,25 @@ function TaskPage() {
 
 
   useEffect(() => {
-    fetch('http://localhost:5000/tasks')
-    .then(res => res.json())
-    .then(tasks => setTasks(tasks))
-    .catch(err => console.error(err));
-  }, [])
+    const fetchTasks = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await fetch('http://localhost:5000/tasks', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          }
+        });
+        const tasks = await res.json();
+        setTasks(tasks);
+      } catch (err) {
+        console.error('Ошибка загрузки задач', err);
+      }
+    };
+
+    fetchTasks();
+  }, [token]);
+
   
   const filteredTasks = tasks.filter(task => {
     if (filterStatus && task.status !== filterStatus) {
@@ -189,7 +217,7 @@ function TaskPage() {
                           users={users}
                           value={assigneeId}
                           onChange={setAssigneeId} 
-                          hasError={errors.creator}/>
+                          hasError={errors.assignee}/>
 
                         <TitleTaskField 
                           value={title} 
