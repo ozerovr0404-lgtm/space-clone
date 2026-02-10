@@ -71,7 +71,6 @@ app.get('/', async (req, res) => {
 
     try {
         const result = await pool.query(
-            console.log('req.user:', req.user)
             `INSERT INTO tasks (title, body, status, creator_id, assignee_id) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
             [ 
                 title, 
