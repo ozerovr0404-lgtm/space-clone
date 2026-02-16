@@ -1,8 +1,9 @@
 import './DrawerFilter.css';
 import { useState } from 'react';
 import StatusSelect from '../StatusSelect/statusSelect';
+import UserSelectForFilter from '../DrawerFilter/UserSelectForFilter/userSelectForFilter';
 
-function DrawerFilter( {open, onClose, onApply} ) {
+function DrawerFilter( {open, onClose, onApply, users, assigneeId, setAssigneeId} ) {
     const [status, setStatus] = useState(null);
 
     return (
@@ -27,6 +28,13 @@ function DrawerFilter( {open, onClose, onApply} ) {
                         value={status}
                         onChange={setStatus}
                     />
+                    <UserSelectForFilter
+                        className="user-select-for-filter"
+                        users={users}
+                        value={assigneeId}
+                        onChange={setAssigneeId}
+                    />
+
                     <div className='down-line'>
                         <button
                             type="button"

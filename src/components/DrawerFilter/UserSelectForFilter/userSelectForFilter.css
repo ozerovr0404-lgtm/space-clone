@@ -1,0 +1,22 @@
+.markup-for-assigner-in-filter {
+    align-items: start;
+    margin: 5px 10px;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+}
+
+.task-assigner-in-filter {
+    margin: 15px 35px 15px 25px;
+    width: 100px;
+    font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
+    font-size: 15.8px;
+    color: rgb(103, 103, 111);
+}
+
+.select-wrapper-in-filter {
+    display: flex;
+    min-width: 0;
+}

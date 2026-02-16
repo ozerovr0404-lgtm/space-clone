@@ -36,6 +36,7 @@ function TaskPage() {
   const [filterStatus, setFilterStatus] = useState(null);
   const [users, setUsers] = useState([]);
   const token = localStorage.getItem('token');
+  const [filterAssigneeId, setFilterAssigneeId] = useState(null);
 
   useEffect(() => {
     fetch('http://localhost:5000/')
@@ -250,6 +251,9 @@ function TaskPage() {
                       onApply={({ status }) => {
                         setFilterStatus(status);
                       }}
+                      users={users}
+                      assigneeId={filterAssigneeId}
+                      setAssigneeId={setFilterAssigneeId}
                       >
                   </DrawerFilter>
       </div>

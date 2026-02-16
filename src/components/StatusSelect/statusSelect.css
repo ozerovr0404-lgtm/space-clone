@@ -1,0 +1,13 @@
+.drawer-filter-body-for-fields {
+    display: flex;
+    flex-direction: row;
+    margin: 30px 0px 10px;
+}
+
+.status-in-filter {
+    margin: 15px 35px 15px 35px;
+    width: 100px;
+    font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
+    font-size: 15.8px;
+    color: rgb(103, 103, 111);
+}
