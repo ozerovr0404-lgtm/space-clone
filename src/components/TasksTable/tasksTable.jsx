@@ -37,6 +37,8 @@ function TasksTable({tasks, setTasks}) {
             console.error('Ошибка при обновлении статуса', err);
         }
     }
+
+    
     return (
         <div className="table-wrapper">
             <table className='table-fixed'>
@@ -68,7 +70,7 @@ function TasksTable({tasks, setTasks}) {
                             <td>{task.creator_full_name}</td>
                             <td>{task.title}</td>
                             <td>{task.body}</td>
-                            <td>{task.assignee_id}</td>
+                            <td>{task.assignee_full_name}</td>
                             <td>
                                 <Select
                                     value={TASK_STATUSES.find(o => o.value === task.status)}

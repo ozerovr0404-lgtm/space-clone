@@ -1,7 +1,7 @@
 import pool from '../bd.js';
 
 export class Task {
-    constructor({ id, title, body, status, creator_id, assignee_id, created_at, creator_full_name }) {
+    constructor({ id, title, body, status, creator_id, assignee_id, created_at, creator_full_name, assignee_full_name }) {
         this.id = id;
         this.title = title;
         this.body = body;
@@ -10,17 +10,22 @@ export class Task {
         this.assignee_id = assignee_id;
         this.created_at = created_at;
         this.creator_full_name = creator_full_name;
+        this.assignee_full_name = assignee_full_name;
     }
 
 
         static baseSelect = `
             SELECT
                 t.*,
-                CONCAT(u.last_name, ' ', u.first_name, ' ', COALESCE(u.middle_name, ''))
-                AS creator_full_name
+                CONCAT(creator.last_name, ' ', creator.first_name, ' ', COALESCE(creator.middle_name, ''))
+                    AS creator_full_name,
+                CONCAT(assignee.last_name, ' ', assignee.first_name, ' ', COALESCE(assignee.middle_name, ''))
+                    AS assignee_full_name
             FROM tasks t
-            LEFT JOIN users u ON t.creator_id = u.id
+            LEFT JOIN users creator ON t.creator_id = creator.id
+            LEFT JOIN users assignee ON t.assignee_id = assignee.id
         `;
+
 
         static async getAll() {
             const result = await pool.query(`
@@ -31,6 +36,7 @@ export class Task {
             return result.rows.map(row => new Task(row));
         }
 
+
         static async getById(id) {
             const result = await pool.query(`
                 ${this.baseSelect}
@@ -39,6 +45,7 @@ export class Task {
 
             return result.rows[0]
         }
+
 
         static async create({ title, body, status, creator_id, assignee_id }) {
             const insertResult = await pool.query(

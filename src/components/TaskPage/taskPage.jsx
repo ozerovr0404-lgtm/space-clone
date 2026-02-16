@@ -55,7 +55,6 @@ function TaskPage() {
           }
         });
         const data = await res.json();
-        console.log('USERS:', data);
         setUsers(data);
       } catch (err) {
         console.error('Ошибка при получении пользователей', err);
@@ -150,7 +149,6 @@ function TaskPage() {
   
   const filteredTasks = Array.isArray(tasks)
     ? tasks.filter(task => filterStatus ? task.status === filterStatus : true) : [];
-    console.log(`TASKS FROM SERVER:`, tasks);
   
     
   const sortedTasks = [...filteredTasks].sort((a, b) => {
