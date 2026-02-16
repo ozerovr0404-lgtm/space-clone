@@ -31,8 +31,8 @@ app.get('/', async (req, res) => {
 
  app.get('/tasks', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM tasks ORDER BY id DESC');
-        res.json(result.rows);
+        const tasks = await Task.getAll();
+        res.json(tasks);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -70,22 +70,19 @@ app.get('/', async (req, res) => {
     const taskStatus = validStatuses.includes(status) ? status : 'in_plans';
 
     try {
-        const result = await pool.query(
-            `INSERT INTO tasks (title, body, status, creator_id, assignee_id) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-            [ 
-                title, 
-                body, 
-                taskStatus,
-                creator_id,
-                assignee_id
-            ]
-        );
-
+        const task = await Task.create({
+            title,
+            body,
+            status: taskStatus,
+            creator_id,
+            assignee_id
+        });
 
         res.json({
             message: 'Задача успешно сохранена!',
-            task: result.rows[0]
+            task
         });
+
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: err.message});
@@ -110,20 +107,19 @@ app.patch('/tasks/:id', async (req, res) => {
     }
 
     try {
-        const task = await Task.getById(id);
+        const task = await Task.changeStatus(id, status);
 
         if (!task) {
             return res.status(404).json({ error: 'Задача не найдена' });
         }
 
-        const updateTask = await task.changeStatus(status);
+        res.json({ task });
 
-        res.json({ task: updateTask });
     } catch (err) {
         console.error('Ошибка при обновлении статуса', err)
         res.status(500).json({ error: err.message })
     }
-})
+});
 
 
 // Добавляем роуты на регистрацию

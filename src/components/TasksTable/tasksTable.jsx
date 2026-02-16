@@ -42,7 +42,7 @@ function TasksTable({tasks, setTasks}) {
             <table className='table-fixed'>
                 <colgroup>
                     <col style={{ width: '60px' }} />
-                    <col style={{ width: '130px' }} />
+                    <col style={{ width: '290px' }} />
                     <col style={{ width: '200px' }} />
                     <col style={{ width: 'auto' }} />
                     <col style={{ width: '180px' }} />
@@ -63,7 +63,7 @@ function TasksTable({tasks, setTasks}) {
                         task ? (
                         <tr key={task.id}>
                             <td>{task.id}</td>
-                            <td>{task.creator}</td>
+                            <td>{task.creator_full_name}</td>
                             <td>{task.title}</td>
                             <td>{task.body}</td>
                             <td>

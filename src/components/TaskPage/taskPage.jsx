@@ -137,24 +137,22 @@ function TaskPage() {
             Authorization: `Bearer ${token}`
           }
         });
-        const tasks = await res.json();
-        setTasks(tasks);
+        const data = await res.json();
+        setTasks(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error('Ошибка загрузки задач', err);
       }
     };
 
     fetchTasks();
-  }, [token]);
+  }, []);
 
   
-  const filteredTasks = tasks.filter(task => {
-    if (filterStatus && task.status !== filterStatus) {
-      return false;
-    }
-    return true;
-  });
-
+  const filteredTasks = Array.isArray(tasks)
+    ? tasks.filter(task => filterStatus ? task.status === filterStatus : true) : [];
+    console.log(`TASKS FROM SERVER:`, tasks);
+  
+    
   const sortedTasks = [...filteredTasks].sort((a, b) => {
     const dateA = new Date(a.created_at);
     const dateB = new Date(b.created_at);
