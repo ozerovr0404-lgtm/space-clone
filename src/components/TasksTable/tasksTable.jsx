@@ -42,11 +42,12 @@ function TasksTable({tasks, setTasks}) {
             <table className='table-fixed'>
                 <colgroup>
                     <col style={{ width: '60px' }} />
-                    <col style={{ width: '290px' }} />
+                    <col style={{ width: '240px' }} />
                     <col style={{ width: '200px' }} />
                     <col style={{ width: 'auto' }} />
+                    <col style={{ width: '240px' }} />
                     <col style={{ width: '180px' }} />
-                    <col style={{ width: '150px' }} />
+                    <col style={{ width: '205px' }} />
                 </colgroup>
                 <thead>
                     <tr>
@@ -54,6 +55,7 @@ function TasksTable({tasks, setTasks}) {
                         <th>Создатель</th>
                         <th>Заголовок</th>
                         <th>Тело задачи</th>
+                        <th>Ответственный</th>
                         <th>Статус</th>
                         <th>Дата и время создания</th>
                     </tr>
@@ -66,6 +68,7 @@ function TasksTable({tasks, setTasks}) {
                             <td>{task.creator_full_name}</td>
                             <td>{task.title}</td>
                             <td>{task.body}</td>
+                            <td>{task.assignee_id}</td>
                             <td>
                                 <Select
                                     value={TASK_STATUSES.find(o => o.value === task.status)}

@@ -4,7 +4,7 @@ import './userSelect.css';
 
 function UserSelect({ users = [], value, onChange }) {
     const options = users.map(u => ({
-        label: `${u.first_name} ${u.last_name}`, 
+        label: `${u.last_name} ${u.first_name} ${u.middle_name ? u.middle_name : ''}`,  // Озеров Роман Сергеевич - first = Имя, middle = Отчество, last = Фамилия
         value: u.id 
     }));
 

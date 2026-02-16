@@ -16,7 +16,7 @@ export class Task {
         static baseSelect = `
             SELECT
                 t.*,
-                CONCAT(u.first_name, ' ', u.middle_name, ' ', COALESCE(u.last_name, ''))
+                CONCAT(u.last_name, ' ', u.first_name, ' ', COALESCE(u.middle_name, ''))
                 AS creator_full_name
             FROM tasks t
             LEFT JOIN users u ON t.creator_id = u.id
