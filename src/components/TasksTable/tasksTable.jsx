@@ -1,8 +1,9 @@
 import { TASK_STATUSES } from '../../constants/taskStatus';
 import './tasksTable.css';
 import Select from 'react-select';
+import AssigneeSelector from './AssigneeSelector/assigneeSelector';
 
-function TasksTable({tasks, setTasks}) {
+function TasksTable({tasks, setTasks, users}) {
 
     const handleStatusChange = async (taskId, newStatus) => {
         
@@ -38,6 +39,35 @@ function TasksTable({tasks, setTasks}) {
         }
     }
 
+    const handleAssigneeChange = async (taskId, newAssigneeId) => {
+        try {
+            const token = localStorage.getItem('token');
+
+            const res = await fetch(`http://localhost:5000/tasks/${taskId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ assignee_id: newAssigneeId })
+            });
+
+            const updateTask = await res.json();
+
+            if (!res.ok) {
+                console.error(updateTask.error);
+                return;
+            }
+
+            setTasks(prev =>
+                prev.map(t => t.id === taskId ? updateTask.task : t)
+            );
+
+        } catch (err) {
+            console.error('Ошибка обновления исполнителя', err);
+        }
+    };
+
     
     return (
         <div className="table-wrapper">
@@ -70,7 +100,13 @@ function TasksTable({tasks, setTasks}) {
                             <td>{task.creator_full_name}</td>
                             <td>{task.title}</td>
                             <td>{task.body}</td>
-                            <td>{task.assignee_full_name}</td>
+                            <td>
+                                <AssigneeSelector
+                                    users={users}
+                                    value={task.assignee_id}
+                                    onChange={(newUserId) => handleAssigneeChange(task.id, newUserId)}
+                                />
+                            </td>
                             <td>
                                 <Select
                                     value={TASK_STATUSES.find(o => o.value === task.status)}

@@ -203,7 +203,11 @@ function TaskPage() {
             />  
         
         <div className="task-table">
-          <TasksTable tasks={sortedTasks} setTasks={setTasks}/>
+          <TasksTable 
+            tasks={sortedTasks}  
+            setTasks={setTasks}
+            users={users}
+          />
         </div>
         
         </BackgroundMain>

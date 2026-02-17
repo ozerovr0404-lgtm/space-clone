@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-image: url('/public/—Pngtree—lilac\ gradient\ geometric\ color\ block_1310201.png');
 }
 
 .backgorund-login-page {
@@ -37,7 +38,7 @@ h2 {
     width: 380px;
     height: 180px;
     padding: 10px;
-    background-color: #eff2ff;
+    background-color: #cbd1eb;
 }
 
 .login-text {
