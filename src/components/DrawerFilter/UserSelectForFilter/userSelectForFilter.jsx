@@ -16,7 +16,7 @@ function UserSelectForFilter({ users = [], value, onChange, }) {
                 <Select
                     options={options}
                     value={options.find(o => o.value === value) || null}
-                    onChange={o => onChange(o.value)}
+                    onChange={o => onChange(o?.value || null)}
                     isClearable
                     placeholder="Выберите пользователя"
                     styles={{

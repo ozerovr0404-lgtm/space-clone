@@ -66,4 +66,13 @@ export class Task {
 
         return this.getById(id);
     }
+
+    static async changeAssignee(id, newAssigneeId) {
+        await pool.query(
+            `UPDATE tasks SET assignee_id = $1 WHERE id = $2`,
+            [newAssigneeId, id]
+        );
+
+        return this.getById(id);
+    }
 }

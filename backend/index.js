@@ -99,21 +99,37 @@ app.get('/', async (req, res) => {
 
 app.patch('/tasks/:id', async (req, res) => {
     const { id } = req.params;
-    const { status } = req.body;
+    const { status, assignee_id } = req.body;
 
-    const validStatuses = ['in_plans', 'in_progress', 'pause', 'done', 'canceled']
-    if (!validStatuses.includes(status)) {
-        return res.status(400).json({ error: 'Недопустимый статус' });
-    }
+    const validStatuses = ['in_plans', 'in_progress', 'pause', 'done', 'canceled'];
 
     try {
-        const task = await Task.changeStatus(id, status);
 
-        if (!task) {
-            return res.status(404).json({ error: 'Задача не найдена' });
+        if (status !== undefined) {
+            if (!validStatuses.includes(status)) {
+                return res.status(400).json({ error: 'Недопустимый статус' });
+            }
+            
+            const task = await Task.changeStatus(id, status);
+
+            if (!task) {
+                return res.status(404).json({ error: 'Задача не найдена' });
+            }
+
+            return res.json({ task });
+        }
+        
+        if (assignee_id !== undefined) {
+            const task = await Task.changeAssignee(id, assignee_id);
+            if (!task) {
+                return res.status(404).json({ error: 'Задача не найдена' });
+            }
+
+            return res.json({ task });
         }
 
-        res.json({ task });
+        return res.status(400).json({ error: 'Нет данных для обновления' });
+
 
     } catch (err) {
         console.error('Ошибка при обновлении статуса', err)

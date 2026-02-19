@@ -62,6 +62,7 @@ function TasksTable({tasks, setTasks, users}) {
             setTasks(prev =>
                 prev.map(t => t.id === taskId ? updateTask.task : t)
             );
+            console.log(updateTask)
 
         } catch (err) {
             console.error('Ошибка обновления исполнителя', err);
@@ -77,7 +78,7 @@ function TasksTable({tasks, setTasks, users}) {
                     <col style={{ width: '240px' }} />
                     <col style={{ width: '200px' }} />
                     <col style={{ width: 'auto' }} />
-                    <col style={{ width: '240px' }} />
+                    <col style={{ width: '260px' }} />
                     <col style={{ width: '180px' }} />
                     <col style={{ width: '205px' }} />
                 </colgroup>
@@ -104,7 +105,7 @@ function TasksTable({tasks, setTasks, users}) {
                                 <AssigneeSelector
                                     users={users}
                                     value={task.assignee_id}
-                                    onChange={(newUserId) => handleAssigneeChange(task.id, newUserId)}
+                                    onChange={(newAssigneeId) => handleAssigneeChange(task.id, newAssigneeId)}
                                 />
                             </td>
                             <td>

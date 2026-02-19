@@ -11,7 +11,7 @@ function AssigneeSelector({ users = [], value, onChange }) {
         <Select
             options={options}
             value={options.find(o => o.value === value) || null}
-            onChange={o => onChange(o.value)}
+            onChange={o => onChange(o?.value ?? null)}
             isClearable
             placeholder="Выберите пользователя"
             menuPortalTarget={document.body}
@@ -37,7 +37,7 @@ function AssigneeSelector({ users = [], value, onChange }) {
                 }),
                 control: (provided) => ({
                     ...provided,
-                    width: '220px',
+                    width: '240px',
                     borderRadius: 4,
                     borderColor: '#606381ff',
                     cursor: 'pointer',
