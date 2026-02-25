@@ -1,7 +1,7 @@
 import './login.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import RegisterModal from '../RegisterModal/registerModal'
+import RegisterModal from '../../components/RegisterModal/registerModal'
 
 function Login() {
 

@@ -1,20 +1,21 @@
-import BackgroundMain from '../backgroundMain/backgroundMain.jsx'
-import RigthPanel from '../RightPanel/rightPanel.jsx';
-import TopPanel from '../TopPanel/topPanel.jsx';
-import FindField from '../FindField/findField.jsx';
-import TaskTitle from '../TaskTitle/taskTitle.jsx';
-import TasksTable from '../TasksTable/tasksTable.jsx';
-import { useState, useEffect } from 'react';
-import DrawerAddTask from '../DrawerAddTask/DrawerAddTask.jsx';
-import Creator from '../CreatorForm/Creator.jsx';
-import TitleTaskField from '../TitleField/TitleField.jsx';
-import TaskBodyField from '../TaskBodyField/TaskBodyField.jsx';
-import TaskTableSorted from '../TaskTableSorted/taskTableSorted.jsx';
 import './taskPage.css';
-import UserMenu from '../UserMenu/userMenu.jsx';
-import UserWindow from '../UserWindow/userWindow.jsx'
-import DrawerFilter from '../DrawerFilter/DrawerFilter.jsx'
-import UserSelect from '../UserSelect/userSelect.jsx';
+import { useState, useEffect } from 'react';
+import TasksTable from './TasksTable/tasksTable.jsx';
+
+import BackgroundMain from '../../components/backgroundMain/backgroundMain.jsx'
+import RigthPanel from '../../components/RightPanel/rightPanel.jsx';
+import TopPanel from '../../components/TopPanel/topPanel.jsx';
+import FindField from '../../components/FindField/findField.jsx';
+import TaskTitle from '../../components/TaskTitle/taskTitle.jsx';
+import DrawerAddTask from '../../components/DrawerAddTask/DrawerAddTask.jsx';
+import Creator from '../../components/CreatorForm/Creator.jsx';
+import TitleTaskField from '../../components/TitleField/TitleField.jsx';
+import TaskBodyField from '../../components/TaskBodyField/TaskBodyField.jsx';
+import TaskTableSorted from '../../components/TaskTableSorted/taskTableSorted.jsx';
+import UserMenu from '../../components/UserMenu/userMenu.jsx';
+import UserWindow from '../../components/UserWindow/userWindow.jsx'
+import DrawerFilter from '../../components/DrawerFilter/DrawerFilter.jsx'
+import UserSelect from '../../components/UserSelect/userSelect.jsx';
 
 
 function TaskPage() {

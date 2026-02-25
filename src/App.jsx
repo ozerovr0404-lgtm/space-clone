@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './components/Login/login';
-import TaskPage from './components/TaskPage/taskPage';
+import Login from './pages/LoginPage/login';
+import TaskPage from './pages/TaskPage/taskPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {

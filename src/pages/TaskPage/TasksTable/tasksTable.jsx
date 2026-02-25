@@ -1,7 +1,7 @@
-import { TASK_STATUSES } from '../../constants/taskStatus';
+import { TASK_STATUSES } from '../../../constants/taskStatus';
 import './tasksTable.css';
 import Select from 'react-select';
-import AssigneeSelector from './AssigneeSelector/assigneeSelector';
+import AssigneeSelector from '../Selectors/AssigneeSelector/assigneeSelector';
 
 function TasksTable({tasks, setTasks, users}) {
 
