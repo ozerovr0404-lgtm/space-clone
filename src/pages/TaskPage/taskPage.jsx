@@ -15,6 +15,7 @@ import TaskTableSorted from '../../features/tasks/TaskTableSorted/taskTableSorte
 import UserWindow from '../../features/user/UserWindow/userWindow.jsx'
 import DrawerFilter from '../../features/tasks/DrawerFilter/DrawerFilter.jsx'
 
+import { filteredTasks } from '../../features/tasks/FilterTasks/filterTasks.js';
 
 
 function TaskPage() {
@@ -109,7 +110,7 @@ function TaskPage() {
           assignee_id: assigneeId
         })
       });
-
+      
 
       const result = await response.json();
       console.log('Ответ сервера', result);
@@ -148,20 +149,15 @@ function TaskPage() {
   }, []);
 
   
-  const filteredTasks = Array.isArray(tasks)
-    ? tasks.filter(task => filterStatus ? task.status === filterStatus : true) : [];
-  
-    
-  const sortedTasks = [...filteredTasks].sort((a, b) => {
+  const filteredAndSortedTasks = filteredTasks(tasks, {
+    status: filterStatus,
+    assigneeId: filterAssigneeId
+  }).sort((a,b) => {
     const dateA = new Date(a.created_at);
     const dateB = new Date(b.created_at);
-
-    if (sortOrder === 'asc') {
-      return dateA - dateB;
-    } else {
-      return dateB - dateA;
-    }
+    return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
   });
+
 
   const [isUserOpen, setIsUserOpen] = useState(false);
 
@@ -204,7 +200,7 @@ function TaskPage() {
         
         <div className="task-table">
           <TasksTable 
-            tasks={sortedTasks}  
+            tasks={filteredAndSortedTasks}  
             setTasks={setTasks}
             users={users}
           />
@@ -251,13 +247,14 @@ function TaskPage() {
                   </DrawerAddTask>              
                     <DrawerFilter 
                       open={isFilterOpen} 
-                      onClose={() => setIsFilterOpen(false)}
-                      onApply={({ status }) => {
-                        setFilterStatus(status);
-                      }}
                       users={users}
                       assigneeId={filterAssigneeId}
                       setAssigneeId={setFilterAssigneeId}
+                      onApply={({ status, assigneeId }) => {
+                        setFilterStatus(status);
+                        setFilterAssigneeId(assigneeId);
+                      }}
+                      onClose={() => setIsFilterOpen(false)}
                       >
                   </DrawerFilter>
       </div>

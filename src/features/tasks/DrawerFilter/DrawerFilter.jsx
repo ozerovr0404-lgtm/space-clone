@@ -1,10 +1,32 @@
 import './DrawerFilter.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import StatusSelect from '../../../pages/TaskPage/Selectors/StatusSelector/statusSelect';
 import UserSelectForFilter from '../../../pages/TaskPage/Selectors/UserSelectForFilter/userSelectForFilter';
 
-function DrawerFilter( {open, onClose, onApply, users, assigneeId, setAssigneeId} ) {
+function DrawerFilter( {open, onClose, onApply, users, assigneeId} ) {
     const [status, setStatus] = useState(null);
+    const [localAssigneeId, setLocalAssigneeId] = useState(assigneeId);
+
+    useEffect(() => {
+        if (open) {
+            setStatus(status);
+            setLocalAssigneeId(assigneeId);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [open, assigneeId]);
+
+    const handleApply = () => {
+        onApply({ status, assigneeId: localAssigneeId });
+        onClose();
+    };
+
+    const handleReset = () => {
+        setStatus(null);
+        setLocalAssigneeId(null);
+        onApply({ status: null, assigneeId: null });
+        onClose();
+    };
+    
 
     return (
         <>
@@ -31,19 +53,15 @@ function DrawerFilter( {open, onClose, onApply, users, assigneeId, setAssigneeId
                     <UserSelectForFilter
                         className="user-select-for-filter"
                         users={users}
-                        value={assigneeId}
-                        onChange={setAssigneeId}
+                        value={localAssigneeId}
+                        onChange={setLocalAssigneeId}
                     />
 
                     <div className='down-line'>
                         <button
                             type="button"
                             className="reset-filtered"
-                            onClick={() => {
-                                setStatus(null)
-                                onApply({ status: null })
-                                onClose()
-                            }}
+                            onClick={handleReset}
                         >
                             <img
                             src="/cross-svgrepo-com.svg" /*Это кнопка "крестик" для закрытия дровера*/
@@ -58,10 +76,7 @@ function DrawerFilter( {open, onClose, onApply, users, assigneeId, setAssigneeId
                         <button 
                             type="button" 
                             className="apply-filter"
-                            onClick={() => {
-                                onApply({ status })
-                                onClose()
-                            }}
+                            onClick={handleApply}
                         >
                             Применить
                         </button>
