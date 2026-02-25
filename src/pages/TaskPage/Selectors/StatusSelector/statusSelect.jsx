@@ -1,5 +1,5 @@
 import Select from 'react-select';
-import { TASK_STATUSES } from '../../constants/taskStatus';
+import { TASK_STATUSES } from '../../../../constants/taskStatus';
 import './statusSelect.css';
 
 function StatusSelect({ value, onChange }) {
