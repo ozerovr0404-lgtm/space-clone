@@ -1,7 +1,7 @@
 import './DrawerFilter.css';
 import { useState } from 'react';
-import StatusSelect from '../../pages/TaskPage/Selectors/StatusSelector/statusSelect';
-import UserSelectForFilter from '../DrawerFilter/UserSelectForFilter/userSelectForFilter';
+import StatusSelect from '../../../pages/TaskPage/Selectors/StatusSelector/statusSelect';
+import UserSelectForFilter from '../../../pages/TaskPage/Selectors/UserSelectForFilter/userSelectForFilter';
 
 function DrawerFilter( {open, onClose, onApply, users, assigneeId, setAssigneeId} ) {
     const [status, setStatus] = useState(null);

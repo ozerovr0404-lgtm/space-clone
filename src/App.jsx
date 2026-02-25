@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './pages/LoginPage/login';
+import Login from './features/auth/LoginPage/login';
 import TaskPage from './pages/TaskPage/taskPage';
 import ProtectedRoute from './components/ProtectedRoute';
 

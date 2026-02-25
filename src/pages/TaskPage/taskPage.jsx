@@ -1,21 +1,20 @@
 import './taskPage.css';
 import { useState, useEffect } from 'react';
 import TasksTable from './TasksTable/tasksTable.jsx';
+import UserSelect from './Selectors/UserSelector/userSelect.jsx';
+import UserMenu from '../../shared/icons/UserIconMenu/userMenu.jsx';
+import TopPanel from '../../shared/ui/layout/TopPanel/topPanel.jsx';
+import LeftPanel from '../../shared/ui/layout/LeftPanel/leftPanel.jsx';
+import TaskBodyField from '../../shared/ui/forms/TaskBodyField/TaskBodyField.jsx';
+import TitleTaskField from '../../shared/ui/forms/TitleField/TitleField.jsx';
+import TaskTitle from '../../shared/ui/widgets/TaskTitle/taskTitle.jsx';
+import BackgroundMain from '../../shared/ui/layout/backgroundMain/backgroundMain.jsx'
+import FindField from '../../features/tasks/FindField/findField.jsx';
+import DrawerAddTask from '../../features/tasks/DrawerAddTask/DrawerAddTask.jsx';
+import TaskTableSorted from '../../features/tasks/TaskTableSorted/taskTableSorted.jsx';
+import UserWindow from '../../features/user/UserWindow/userWindow.jsx'
+import DrawerFilter from '../../features/tasks/DrawerFilter/DrawerFilter.jsx'
 
-import BackgroundMain from '../../components/backgroundMain/backgroundMain.jsx'
-import RigthPanel from '../../components/RightPanel/rightPanel.jsx';
-import TopPanel from '../../components/TopPanel/topPanel.jsx';
-import FindField from '../../components/FindField/findField.jsx';
-import TaskTitle from '../../components/TaskTitle/taskTitle.jsx';
-import DrawerAddTask from '../../components/DrawerAddTask/DrawerAddTask.jsx';
-import Creator from '../../components/CreatorForm/Creator.jsx';
-import TitleTaskField from '../../components/TitleField/TitleField.jsx';
-import TaskBodyField from '../../components/TaskBodyField/TaskBodyField.jsx';
-import TaskTableSorted from '../../components/TaskTableSorted/taskTableSorted.jsx';
-import UserMenu from '../../components/UserMenu/userMenu.jsx';
-import UserWindow from '../../components/UserWindow/userWindow.jsx'
-import DrawerFilter from '../../components/DrawerFilter/DrawerFilter.jsx'
-import UserSelect from '../../components/UserSelect/userSelect.jsx';
 
 
 function TaskPage() {
@@ -171,9 +170,9 @@ function TaskPage() {
     
 
       <div className="app">
-        <RigthPanel>
+        <LeftPanel>
           <UserMenu onClick={() => setIsUserOpen(prev => !prev)} />
-        </RigthPanel>
+        </LeftPanel>
 
         <UserWindow
           open={isUserOpen}
