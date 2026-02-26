@@ -17,6 +17,8 @@ import DrawerFilter from '../../features/tasks/DrawerFilter/DrawerFilter.jsx'
 
 import { filteredTasks } from '../../features/tasks/FilterTasks/filterTasks.js';
 
+import { TablePagination } from '@mui/material';
+
 
 function TaskPage() {
   
@@ -38,6 +40,10 @@ function TaskPage() {
   const [users, setUsers] = useState([]);
   const token = localStorage.getItem('token');
   const [filterAssigneeId, setFilterAssigneeId] = useState(null);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  
 
   useEffect(() => {
     fetch('http://localhost:5000/')
@@ -161,6 +167,22 @@ function TaskPage() {
 
   const [isUserOpen, setIsUserOpen] = useState(false);
 
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeperPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  }
+
+  const paginationTasks = filteredAndSortedTasks.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
+
+
   return (
     <>
     
@@ -200,13 +222,25 @@ function TaskPage() {
         
         <div className="task-table">
           <TasksTable 
-            tasks={filteredAndSortedTasks}  
+            tasks={paginationTasks}
             setTasks={setTasks}
             users={users}
           />
         </div>
+
+        <TablePagination 
+          component="div"
+          count={filteredAndSortedTasks.length}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={handleChangeperPage}
+          rowsPerPageOptions={[10, 25, 50, 100]}
+          className='pagintation' 
+        />
         
         </BackgroundMain>
+        
                   <DrawerAddTask open={open} onClose={() => setOpen(false)}>
                     <form onSubmit={handleSubmit} className='form-in-drawer'>
                       <div className='form-fields'>
@@ -231,9 +265,6 @@ function TaskPage() {
                           }} 
                           hasError={errors.body}/>
                         
-                        
-                        
-
                         <div className='down-grey-line'> 
 
                           <div className='clear-but'>
@@ -244,6 +275,7 @@ function TaskPage() {
                         </div>
                       </div>
                     </form>
+
                   </DrawerAddTask>              
                     <DrawerFilter 
                       open={isFilterOpen} 

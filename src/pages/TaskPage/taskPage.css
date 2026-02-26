@@ -10,7 +10,7 @@
 }
 
 .task-table {
-    margin: 0 15px;
+    margin: 0px 15px 0px 15px;
 }
 
 .down-grey-line {
@@ -45,3 +45,6 @@
     margin: 0px 0px 0px 20px 
 }
 
+.pagintation {
+    margin: 0px 80px 10px;
+}
