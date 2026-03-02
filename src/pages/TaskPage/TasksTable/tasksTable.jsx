@@ -43,6 +43,11 @@ function TasksTable({tasks, setTasks, users}) {
         try {
             const token = localStorage.getItem('token');
 
+            if (!token) {
+                console.error('Нет токена!');
+                return;
+            }
+
             const res = await fetch(`http://localhost:5000/tasks/${taskId}`, {
                 method: 'PATCH',
                 headers: {
