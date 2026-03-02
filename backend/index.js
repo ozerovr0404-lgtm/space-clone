@@ -30,12 +30,9 @@ app.get('/', async (req, res) => {
 
 
  app.get('/tasks', async (req, res) => {
-    try {
-        const tasks = await Task.getAll();
-        res.json(tasks);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+    const { search } = req.query;
+    const tasks = await Task.getAll(search);
+    res.json(tasks);
  });
 
 

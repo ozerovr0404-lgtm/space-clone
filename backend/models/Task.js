@@ -27,11 +27,22 @@ export class Task {
         `;
 
 
-        static async getAll() {
-            const result = await pool.query(`
+        static async getAll(search) {
+
+            let query = `
                 ${this.baseSelect}
-                ORDER BY t.created_at DESC
-            `);
+            `;
+
+            const values = [];
+
+            if (search) {
+                values.push(`%${search}%`);
+                query += ` WHERE t.title ILIKE $1 `;
+            }
+
+            query += ` ORDER BY t.created_at DESC `;
+
+            const result = await pool.query(query, values);
 
             return result.rows.map(row => new Task(row));
         }

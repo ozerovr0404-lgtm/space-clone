@@ -14,6 +14,7 @@ import DrawerAddTask from '../../features/tasks/DrawerAddTask/DrawerAddTask.jsx'
 import TaskTableSorted from '../../features/tasks/TaskTableSorted/taskTableSorted.jsx';
 import UserWindow from '../../features/user/UserWindow/userWindow.jsx'
 import DrawerFilter from '../../features/tasks/DrawerFilter/DrawerFilter.jsx'
+import { searchTasks } from '../../api/tasks.js';
 
 import { filteredTasks } from '../../features/tasks/FilterTasks/filterTasks.js';
 
@@ -182,6 +183,16 @@ function TaskPage() {
     page * rowsPerPage + rowsPerPage
   );
 
+  const handleSearch = async (query) => {
+      try {
+          const data = await searchTasks(query);
+          console.log('Найденные задачи:', data);
+          setTasks(data);
+      } catch (err) {
+          console.error('Ошибка поиска задач', err);
+      }
+  }
+  
 
   return (
     <>
@@ -201,7 +212,9 @@ function TaskPage() {
           <TopPanel>
             <div className="top-panel-left">
               <TaskTitle />
-              <FindField />
+              <FindField
+                onSearch={handleSearch}
+              />
               <button onClick={() => setIsFilterOpen(true)} className="tasks-filter">
                 Фильтр
               </button>
