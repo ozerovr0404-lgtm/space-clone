@@ -82,7 +82,7 @@ function TasksTable({tasks, setTasks, users}) {
                     <col style={{ width: '60px' }} />
                     <col style={{ width: '240px' }} />
                     <col style={{ width: '200px' }} />
-                    <col style={{ width: 'auto' }} />
+                    <col style={{ width: '600px'}} />
                     <col style={{ width: '260px' }} />
                     <col style={{ width: '180px' }} />
                     <col style={{ width: '205px' }} />
