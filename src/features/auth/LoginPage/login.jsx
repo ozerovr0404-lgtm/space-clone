@@ -72,7 +72,9 @@ function Login() {
                     Зарегистрироваться
                 </button>
 
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+                <p className='login-error'>
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
+                </p>
 
                 {openRegister && (
                     <RegisterModal onClose={() => setOpenRegister(false)} />

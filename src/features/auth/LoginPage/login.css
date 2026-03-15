@@ -90,3 +90,8 @@ input[type="password"] {
     font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
     cursor: pointer;
 }
+
+.login-error {
+    position: absolute;
+    top: 620px;
+}
