@@ -48,3 +48,7 @@
 .pagintation {
     margin: 0px 80px 10px;
 }
+
+.task-body-ceil {
+    cursor: pointer;
+}

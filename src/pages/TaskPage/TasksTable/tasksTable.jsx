@@ -3,7 +3,7 @@ import './tasksTable.css';
 import Select from 'react-select';
 import AssigneeSelector from '../Selectors/AssigneeSelector/assigneeSelector';
 
-function TasksTable({tasks, setTasks, users}) {
+function TasksTable({tasks, setTasks, users, onTaskClick}) {
 
     const handleStatusChange = async (taskId, newStatus) => {
         
@@ -105,7 +105,12 @@ function TasksTable({tasks, setTasks, users}) {
                             <td>{task.id}</td>
                             <td>{task.creator_full_name}</td>
                             <td>{task.title}</td>
-                            <td>{task.body}</td>
+                            <td
+                                className='task-body-ceil'
+                                onClick={() => onTaskClick(task)}
+                            >
+                                {task.body}
+                            </td>
                             <td>
                                 <AssigneeSelector
                                     users={users}

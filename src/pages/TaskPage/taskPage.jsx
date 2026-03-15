@@ -15,6 +15,7 @@ import TaskTableSorted from '../../features/tasks/TaskTableSorted/taskTableSorte
 import UserWindow from '../../features/user/UserWindow/userWindow.jsx'
 import DrawerFilter from '../../features/tasks/DrawerFilter/DrawerFilter.jsx'
 import { searchTasks } from '../../api/tasks.js';
+import TaskModal from '../TaskModal/taskModal.jsx';
 
 import { filteredTasks } from '../../features/tasks/FilterTasks/filterTasks.js';
 
@@ -43,6 +44,8 @@ function TaskPage() {
   const [filterAssigneeId, setFilterAssigneeId] = useState(null);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [isModalTaskOpen, setIsModalTaskOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
 
   
 
@@ -192,7 +195,12 @@ function TaskPage() {
           console.error('Ошибка поиска задач', err);
       }
   }
-  
+
+  const handleOpenTaskModal = (task) => {
+    setSelectedTask(task);
+    setIsModalTaskOpen(true)
+  }
+   
 
   return (
     <>
@@ -238,6 +246,7 @@ function TaskPage() {
             tasks={paginationTasks}
             setTasks={setTasks}
             users={users}
+            onTaskClick={handleOpenTaskModal}
           />
         </div>
 
@@ -289,19 +298,27 @@ function TaskPage() {
                       </div>
                     </form>
 
-                  </DrawerAddTask>              
-                    <DrawerFilter 
-                      open={isFilterOpen} 
-                      users={users}
-                      assigneeId={filterAssigneeId}
-                      setAssigneeId={setFilterAssigneeId}
-                      onApply={({ status, assigneeId }) => {
-                        setFilterStatus(status);
-                        setFilterAssigneeId(assigneeId);
-                      }}
-                      onClose={() => setIsFilterOpen(false)}
-                      >
+                  </DrawerAddTask>
+
+                  <DrawerFilter 
+                    open={isFilterOpen} 
+                    users={users}
+                    assigneeId={filterAssigneeId}
+                    setAssigneeId={setFilterAssigneeId}
+                    onApply={({ status, assigneeId }) => {
+                      setFilterStatus(status);
+                      setFilterAssigneeId(assigneeId);
+                    }}
+                    onClose={() => setIsFilterOpen(false)}
+                  >
                   </DrawerFilter>
+
+                  <TaskModal
+                    open={isModalTaskOpen}
+                    task={selectedTask}
+                    onClose={() => setIsModalTaskOpen(false)}
+                  >
+                  </TaskModal>
       </div>
     </>
   );
