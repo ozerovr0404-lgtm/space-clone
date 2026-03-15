@@ -12,6 +12,7 @@ function DrawerAddTask({ open, onClose, children }) {
             <div className={`drawer ${open ? "drawer-open" : "" }`}>
                 <div className="drawer-header">
                     <h2>Новая задача</h2>
+                    
                     <button onClick={onClose} className="close-cross">
                         <img
                             src="/cross-svgrepo-com.svg" /*Это кнопка "крестик" для закрытия дровера*/
