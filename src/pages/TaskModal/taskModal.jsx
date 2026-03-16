@@ -62,6 +62,15 @@ function TaskModal({open, onClose, task, setTasks}) {
 
                 <div className='modal-window-body'>
 
+                    <div className='group-task-creator'>
+                        <div className='task-title-creator'>
+                            Создатель
+                        </div>
+                        <div className='task-title-creator-field'>
+                            {task.creator_full_name}
+                        </div>
+                    </div>
+
                     <div className='group-task-title-main'>
                         <div className='task-title-main'>
                             Заголовок
@@ -124,6 +133,21 @@ function TaskModal({open, onClose, task, setTasks}) {
                         </div>
                     </div>
                     
+                    <div className='group-date_time'>
+                        <div className='task-date_time-title'>
+                            Дата и время создания
+                        </div>
+                        <div className='task-date_time'>
+                            {new Date(task.created_at).toLocaleString('ru-RU', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit'
+                            })}
+                        </div>
+                    </div>
                     
                 </div>
 
