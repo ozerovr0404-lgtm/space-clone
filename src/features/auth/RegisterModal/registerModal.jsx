@@ -20,7 +20,7 @@ function RegisterModal({ onClose }) {
                 const response = await fetch('http://localhost:5000/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ login, password, first_name, last_name, middle_name, role })
+                    body: JSON.stringify({ login, password, last_name, first_name, middle_name, role })
                 });
                 
                 const data = await response.json();
@@ -59,16 +59,16 @@ function RegisterModal({ onClose }) {
                     <input
                         type="text"
                         placeholder="Фамилия"
-                        value={first_name}
-                        onChange={(e) => setFirst_name(e.target.value)}
+                        value={last_name}
+                        onChange={(e) => setLast_name(e.target.value)}
                         className='register-first-name'
                     />
 
                     <input
                         type="text"
                         placeholder="Имя"
-                        value={last_name}
-                        onChange={(e) => setLast_name(e.target.value)}
+                        value={first_name}
+                        onChange={(e) => setFirst_name(e.target.value)}
                         className='register-last-name'
                     />
 

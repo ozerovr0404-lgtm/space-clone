@@ -1,9 +1,29 @@
 import './userWindow.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 function UserWindow({ open, onClose }) {
     const navigate = useNavigate();
+    const [currentUser, setCurrentUser] = useState(null);
 
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const res = await fetch("http://localhost:5000/me", {
+                    headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    }
+                });
+                
+                const data = await res.json();
+                setCurrentUser(data);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        fetchUser();
+    }, []);
+    
     if (!open) return null;
 
     const menuItems = [
@@ -44,7 +64,9 @@ function UserWindow({ open, onClose }) {
             onClose();
             console.log('Не равен логауту')
         }
-    }    
+    }
+
+    
 
     return (
         <>
@@ -54,7 +76,8 @@ function UserWindow({ open, onClose }) {
             <div className="user-window">
                 <div className='window-user-header'>
                     <div className='full-name'>
-                        Озеров Р.С.
+                        
+                        {`${currentUser?.last_name} ${currentUser?.first_name.split("").splice(0, 1).join("")}. ${currentUser?.middle_name.split("").splice(0, 1).join("")}.`}
                     </div>
                     <div className='user-id'>
                         id 123456789

@@ -15,8 +15,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-app.get('/me', auth, (req, res) => {  // тестовый роут
-    res.json(req.user);
+app.get('/me', auth, async(req, res) => {  
+    try {
+        const result = await pool.query(
+            `SELECT id, login, first_name, last_name, middle_name FROM users WHERE id = $1`,
+            [req.user.id]
+        );
+
+        res.json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: `Ошибка сервера` });
+    }
 });
 
 app.get('/', async (req, res) => {
@@ -39,7 +49,11 @@ app.get('/', async (req, res) => {
  app.get('/users', async (req, res) => {
     try {
         const result = await pool.query(
-            `SELECT id, first_name, last_name, middle_name FROM users ORDER BY last_name`
+            `SELECT id, 
+            first_name, 
+            last_name, 
+            middle_name 
+            FROM users ORDER BY last_name`
         );
                         // Озеров Сергеевич Роман | first = Имя, middle = Отчество, last = Фамилия
         res.json(result.rows);
