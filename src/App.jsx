@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './features/auth/LoginPage/login';
 import TaskPage from './pages/TaskPage/taskPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import UserPage from './pages/UserPage/userPage';
 
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route path="/user/:id" element={<UserPage/>} />
 
         <Route path="/" element={<Navigate to="/login" />} />
 

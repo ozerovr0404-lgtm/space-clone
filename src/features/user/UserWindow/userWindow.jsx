@@ -28,8 +28,8 @@ function UserWindow({ open, onClose }) {
 
     const menuItems = [
         {
-            label: "В разработке",
-            path: ""
+            label: "ЛК пользователя",
+            path: "profile"
         },
         {
             label: "В разработке",
@@ -51,10 +51,18 @@ function UserWindow({ open, onClose }) {
 
     const handleItemClick = (item) => {
         
+        if (item.path === 'profile') {
+            if (!currentUser?.id) return;
+
+            navigate(`/user/${currentUser.id}`);
+            onClose();
+            return;
+        }
+
         if (item.action === 'logout') {
             localStorage.removeItem('token');
             onClose();
-            console.log('Проверяем логаут')
+            console.log('Пользователь разовтаризован!')
             navigate('/login')
             return
         }
@@ -77,10 +85,10 @@ function UserWindow({ open, onClose }) {
                 <div className='window-user-header'>
                     <div className='full-name'>
                         
-                        {`${currentUser?.last_name} ${currentUser?.first_name.split("").splice(0, 1).join("")}. ${currentUser?.middle_name.split("").splice(0, 1).join("")}.`}
+                        {`${currentUser?.last_name} ${currentUser?.first_name?.split("").splice(0, 1).join("")}. ${currentUser?.middle_name?.split("").splice(0, 1).join("")}.`}
                     </div>
                     <div className='user-id'>
-                        id 123456789
+                        {`Идентификатор: ${currentUser?.id}`}
                     </div>
                 </div>
 

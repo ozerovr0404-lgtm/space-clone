@@ -1,0 +1,9 @@
+.right-part-page {
+    width: 1750px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 25px;
+    padding: 20px;
+    background-color: rgb(255, 255, 255);
+}

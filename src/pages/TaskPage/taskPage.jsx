@@ -310,15 +310,13 @@ function TaskPage() {
                       setFilterAssigneeId(assigneeId);
                     }}
                     onClose={() => setIsFilterOpen(false)}
-                  >
-                  </DrawerFilter>
+                  />
 
                   <TaskModal
                     open={isModalTaskOpen}
                     task={selectedTask}
                     onClose={() => setIsModalTaskOpen(false)}
-                  >
-                  </TaskModal>
+                  />
       </div>
     </>
   );

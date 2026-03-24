@@ -39,14 +39,14 @@ app.get('/', async (req, res) => {
 });
 
 
- app.get('/tasks', async (req, res) => {
+app.get('/tasks', async (req, res) => {
     const { search } = req.query;
     const tasks = await Task.getAll(search);
     res.json(tasks);
  });
 
 
- app.get('/users', async (req, res) => {
+app.get('/users', async (req, res) => {
     try {
         const result = await pool.query(
             `SELECT id, 
@@ -55,10 +55,26 @@ app.get('/', async (req, res) => {
             middle_name 
             FROM users ORDER BY last_name`
         );
-                        // Озеров Сергеевич Роман | first = Имя, middle = Отчество, last = Фамилия
+                        // Озеров Сергеевич Роман | first = Имя, last = Фамилия, middle = Отчество
         res.json(result.rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
+    }
+});
+
+app.get('/users/:id', async (req, res) => {
+    try {
+        const result = await pool.query(
+            `SELECT id,
+            first_name,
+            last_name,
+            middle_name,
+            FROM users ORDER BY last_name`
+        );
+
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).json({error: err.message});
     }
 });
 
