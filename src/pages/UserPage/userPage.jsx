@@ -8,6 +8,7 @@ import UserMenu from '../../shared/icons/UserIconMenu/userMenu';
 import UserPhoto from './UserPhoto/userPhoto';
 import UserPageSeparator from './UserPageSeparator/userPageSeparator';
 import RightPartUserPage from './RightPartUserPage/rightPartUserPage';
+import ParamsButton from './UserParams/userParamsButton';
 
 
 function UserPage() {
@@ -27,9 +28,9 @@ function UserPage() {
             />
 
                 <UserPageSeparator>
-                    <UserPhoto>
-                        
-                    </UserPhoto>
+                    <UserPhoto></UserPhoto>
+
+                    <ParamsButton />
                 </UserPageSeparator>
                 
                 <RightPartUserPage>
