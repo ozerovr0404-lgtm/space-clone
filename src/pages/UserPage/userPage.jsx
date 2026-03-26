@@ -9,6 +9,7 @@ import UserPhoto from './UserPhoto/userPhoto';
 import UserPageSeparator from './UserPageSeparator/userPageSeparator';
 import RightPartUserPage from './RightPartUserPage/rightPartUserPage';
 import ParamsButton from './UserParams/userParamsButton';
+import MainLogo from '../../shared/ui/layout/LeftPanel/LogoMain/logoMain';
 
 
 function UserPage() {
@@ -18,6 +19,8 @@ function UserPage() {
 
     return (
         <UserPageBackground>
+            
+
             <LeftPanel>
                 <UserMenu onClick={() => setIsUserOpen(prev => !prev)}/>
             </LeftPanel>
