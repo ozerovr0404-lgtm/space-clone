@@ -6,7 +6,7 @@ function MainLogo() {
         <div className='main-logo'>
             <Link to="/tasks">
                 <img
-                        src="/selftimer.svg" //иконка юзера в левый нижний угол
+                        src="/ai-hub.svg" //иконка юзера в левый нижний угол
                         alt="logo"
                         width={40}
                         height={50}
