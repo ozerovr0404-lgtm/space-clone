@@ -10,6 +10,7 @@ function RegisterModal({ onClose }) {
     const [last_name, setLast_name] = useState('');
     const [middle_name, setMiddle_name] = useState('');
     const role = null;
+    const is_active = true;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,7 +21,7 @@ function RegisterModal({ onClose }) {
                 const response = await fetch('http://localhost:5000/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ login, password, last_name, first_name, middle_name, role })
+                    body: JSON.stringify({ login, password, last_name, first_name, middle_name, role, is_active })
                 });
                 
                 const data = await response.json();

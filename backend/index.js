@@ -168,7 +168,7 @@ app.patch('/tasks/:id', async (req, res) => {
 // Добавляем роуты на регистрацию
 
 app.post('/register', async (req, res) => {
-    const { login, password, first_name, last_name, middle_name, role } = req.body;
+    const { login, password, first_name, last_name, middle_name, role, is_active } = req.body;
 
     // Проверка на англ символы и цифры
     const ENG_SYMBOL = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_';
@@ -186,14 +186,15 @@ app.post('/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const result = await pool.query(
-            'INSERT INTO users (login, password, first_name, last_name, middle_name, role) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, login, created_at, first_name, last_name, middle_name, role',
+            'INSERT INTO users (login, password, first_name, last_name, middle_name, role, is_active) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, login, created_at, first_name, last_name, middle_name, role',
             [
                 login, 
                 hashedPassword,
                 first_name,
                 last_name,
                 middle_name || null,
-                role || null
+                role || null,
+                is_active || true
             ]
         );
 
