@@ -10,6 +10,7 @@ import UserPageSeparator from './UserPageSeparator/userPageSeparator';
 import RightPartUserPage from './RightPartUserPage/rightPartUserPage';
 import ParamsButton from './UserParams/userParamsButton';
 import MainLogo from '../../shared/ui/layout/LeftPanel/LogoMain/logoMain';
+import UserName from './UserName/userName';
 
 
 function UserPage() {
@@ -31,7 +32,9 @@ function UserPage() {
             />
 
                 <UserPageSeparator>
-                    <UserPhoto></UserPhoto>
+                    <UserPhoto />
+
+                    <UserName />
 
                     <ParamsButton />
                 </UserPageSeparator>

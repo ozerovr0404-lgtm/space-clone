@@ -21,7 +21,10 @@ function App() {
           }
         />
 
-        <Route path="/user/:id" element={<UserPage/>} />
+        <Route path="/user/:id" element={
+          <UserPage />
+          } 
+        />
 
         <Route path="/" element={<Navigate to="/login" />} />
 

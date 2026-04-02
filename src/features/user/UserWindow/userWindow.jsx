@@ -84,7 +84,6 @@ function UserWindow({ open, onClose }) {
             <div className="user-window">
                 <div className='window-user-header'>
                     <div className='full-name'>
-                        
                         {`${currentUser?.last_name} ${currentUser?.first_name?.split("").splice(0, 1).join("")}. ${currentUser?.middle_name?.split("").splice(0, 1).join("")}.`}
                     </div>
                     <div className='user-id'>
