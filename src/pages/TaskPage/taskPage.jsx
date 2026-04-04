@@ -316,6 +316,8 @@ function TaskPage() {
                     open={isModalTaskOpen}
                     task={selectedTask}
                     onClose={() => setIsModalTaskOpen(false)}
+                    setTasks={setTasks}
+                    setTask={setSelectedTask}
                   />
       </div>
     </>

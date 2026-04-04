@@ -1,38 +1,20 @@
 import './taskModal.css';
 import { TASK_STATUSES } from '../../constants/taskStatus';
 import Select from 'react-select';
+import { updateTaskStatus } from '../../api/updateTaskStatus';
 
-function TaskModal({open, onClose, task, setTasks}) {
+function TaskModal({open, onClose, task, setTasks, setTask}) {
 
     const handleStatusChange = async (taskId, newStatus) => {
         
         try {
-            const token = localStorage.getItem('token');
-
-            if (!token) {
-                console.error('Нет токена!');
-                return;
-            }
-
-            const res = await fetch(`http://localhost:5000/tasks/${taskId}`, {
-                method: 'PATCH', //для частичного обновления
-                headers: { 
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`
-                 },
-                body: JSON.stringify({ status: newStatus })
-            });
-
-            const updateTask = await res.json();
-            if (!res.ok) {
-                console.error('Ошибка сервера при обновлении задачи:', updateTask.error);
-                return;
-            }
-            console.log('Обновлённая задача:', updateTask)
+            const updateTask = await updateTaskStatus(taskId, newStatus);
 
             setTasks(prevTasks => 
-                prevTasks.map(t => t.id === taskId ? updateTask.task : t)
+                prevTasks.map(task => task.id === taskId ? updateTask : task)
             );
+
+            setTask(updateTask);
         } catch (err) {
             console.error('Ошибка при обновлении статуса', err);
         }
@@ -45,7 +27,7 @@ function TaskModal({open, onClose, task, setTasks}) {
     return (
         <>
             {open && <div className='modal-window-backdrop' onClick={onClose} />}
-
+            
             <div className={`background-modal ${open ? "background-modal-open" : ""}`}>
                 <div className='modal-header'>
                     <h2>Задача #{task.id}</h2>
@@ -92,6 +74,7 @@ function TaskModal({open, onClose, task, setTasks}) {
                     <div className='group-task-status'>
                         <div className='status-title-modal'>Статус</div>
                         <div className='modal-task-status'>
+
                             <Select
                                 value={TASK_STATUSES.find(o => o.value === task.status)}
                                 onChange={selected => handleStatusChange(task.id, selected?.value || null)}
