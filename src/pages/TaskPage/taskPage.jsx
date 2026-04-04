@@ -46,8 +46,28 @@ function TaskPage() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [isModalTaskOpen, setIsModalTaskOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
+  const [total, setTotal] = useState(0);
 
-  
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await fetch(`http://localhost:5000/tasks?page=${page+1}&limit=${rowsPerPage}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          }
+        });
+        const data = await res.json();
+        setTasks(data.tasks);
+        setTotal(data.total);
+      } catch (err) {
+        console.error('Ошибка загрузки задач', err);
+      }
+    };
+
+    fetchTasks();
+  }, [page, rowsPerPage]);
 
   useEffect(() => {
     fetch('http://localhost:5000/')
@@ -137,27 +157,6 @@ function TaskPage() {
     }    
   };
 
-
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:5000/tasks', {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
-          }
-        });
-        const data = await res.json();
-        setTasks(Array.isArray(data) ? data : []);
-      } catch (err) {
-        console.error('Ошибка загрузки задач', err);
-      }
-    };
-
-    fetchTasks();
-  }, []);
-
   
   const filteredAndSortedTasks = filteredTasks(tasks, {
     status: filterStatus,
@@ -181,10 +180,7 @@ function TaskPage() {
     setPage(0);
   }
 
-  const paginationTasks = filteredAndSortedTasks.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage
-  );
+  const paginationTasks = tasks;
 
   const handleSearch = async (query) => {
       try {
@@ -253,7 +249,7 @@ function TaskPage() {
 
         <TablePagination 
           component="div"
-          count={filteredAndSortedTasks.length}
+          count={total}
           page={page}
           onPageChange={handleChangePage}
           rowsPerPage={rowsPerPage}

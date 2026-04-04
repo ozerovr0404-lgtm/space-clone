@@ -26,25 +26,42 @@ export class Task {
             LEFT JOIN users assignee ON t.assignee_id = assignee.id
         `;
 
+        static baseFrom = `
+            FROM tasks t
+            LEFT JOIN users creator ON t.creator_id = creator.id
+            LEFT JOIN users assignee ON t.assignee_id = assignee.id
+        `;
 
-        static async getAll(search) {
-
-            let query = `
-                ${this.baseSelect}
-            `;
+        static async getAll({search, limit, offset}) {
 
             const values = [];
+            let where = '';
+            let index = 1;
 
             if (search) {
+                where = ` WHERE t.title ILIKE $${index}`;
                 values.push(`%${search}%`);
-                query += ` WHERE t.title ILIKE $1 `;
+                index++
             }
 
-            query += ` ORDER BY t.created_at DESC `;
+            const dataQuery = `
+                ${this.baseSelect}
+                ${where}
+                ORDER BY t.created_at DESC
+                LIMIT $${index} OFFSET $${index + 1}
+            `;
 
-            const result = await pool.query(query, values);
+            const dataValues = [...values, limit, offset];
 
-            return result.rows.map(row => new Task(row));
+            const dataResult = await pool.query(dataQuery, dataValues);
+
+            const countQuery = `SELECT COUNT(*) ${this.baseFrom} ${where}`;
+            const countResult = await pool.query(countQuery, values);
+
+            return {
+                tasks: dataResult.rows.map(row => new Task(row)),
+                total: parseInt(countResult.rows[0].count)
+            };
         }
 
 
@@ -54,7 +71,7 @@ export class Task {
                 WHERE t.id = $1
             `, [id]);
 
-            return result.rows[0]
+            return result.rows[0] ? new Task(result.rows[0]) : null
         }
 
 
