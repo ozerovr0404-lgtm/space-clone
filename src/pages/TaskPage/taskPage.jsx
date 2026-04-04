@@ -245,6 +245,7 @@ function TaskPage() {
           <TasksTable 
             tasks={paginationTasks}
             setTasks={setTasks}
+            setTask={setSelectedTask}
             users={users}
             onTaskClick={handleOpenTaskModal}
           />

@@ -5,7 +5,7 @@ export const updateTaskAssignee = async (taskId, newAssigneeId) => {
             throw new Error('Нет токена');
         }
 
-        const res = await fetch(`http://localhost:5000/${taskId}`, {
+        const res = await fetch(`http://localhost:5000/tasks/${taskId}`, {
             method: 'PATCH',
             headers: {
                 'Content-type': 'application/json',

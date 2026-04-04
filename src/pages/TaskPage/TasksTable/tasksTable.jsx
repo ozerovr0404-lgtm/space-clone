@@ -2,38 +2,20 @@ import { TASK_STATUSES } from '../../../constants/taskStatus';
 import './tasksTable.css';
 import Select from 'react-select';
 import AssigneeSelector from '../Selectors/AssigneeSelector/assigneeSelector';
+import { updateTaskAssignee } from '../../../api/updateTaskAssignee';
+import { updateTaskStatus } from '../../../api/updateTaskStatus';
 
 function TasksTable({tasks, setTasks, users, onTaskClick}) {
 
     const handleStatusChange = async (taskId, newStatus) => {
         
         try {
-            const token = localStorage.getItem('token');
-
-            if (!token) {
-                console.error('Нет токена!');
-                return;
-            }
-
-            const res = await fetch(`http://localhost:5000/tasks/${taskId}`, {
-                method: 'PATCH', //для частичного обновления
-                headers: { 
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`
-                 },
-                body: JSON.stringify({ status: newStatus })
-            });
-
-            const updateTask = await res.json();
-            if (!res.ok) {
-                console.error('Ошибка сервера при обновлении задачи:', updateTask.error);
-                return;
-            }
-            console.log('Обновлённая задача:', updateTask)
+            const updateTask = await updateTaskStatus(taskId, newStatus);
 
             setTasks(prevTasks => 
-                prevTasks.map(t => t.id === taskId ? updateTask.task : t)
+                prevTasks.map(task => task.id === taskId ? updateTask : task)
             );
+
         } catch (err) {
             console.error('Ошибка при обновлении статуса', err);
         }
@@ -41,33 +23,12 @@ function TasksTable({tasks, setTasks, users, onTaskClick}) {
 
     const handleAssigneeChange = async (taskId, newAssigneeId) => {
         try {
-            const token = localStorage.getItem('token');
-
-            if (!token) {
-                console.error('Нет токена!');
-                return;
-            }
-
-            const res = await fetch(`http://localhost:5000/tasks/${taskId}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify({ assignee_id: newAssigneeId })
-            });
-
-            const updateTask = await res.json();
-
-            if (!res.ok) {
-                console.error(updateTask.error);
-                return;
-            }
+            const updateTaskAss = await updateTaskAssignee(taskId, newAssigneeId);
 
             setTasks(prev =>
-                prev.map(t => t.id === taskId ? updateTask.task : t)
+                prev.map(task => task.id === taskId ? updateTaskAss : task)
             );
-            console.log(updateTask)
+            console.log(updateTaskAss)
 
         } catch (err) {
             console.error('Ошибка обновления исполнителя', err);
