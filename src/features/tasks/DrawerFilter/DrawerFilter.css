@@ -59,11 +59,11 @@ h2 {
 .tasks-filter {
     width: 100px;
     height: 37px;
-    color: #2c3979;
+    color: #2c3979; 
     background-color: #f8f9ff;
     border-radius: 5px;
     border-style: none;
-    margin: 9px 10px 10px 20px;
+    margin: 9px 10px 8px 20px;
     margin-left: auto;
     font-size: 16px;
     font-family: Roboto, PT Sans, helvetica, arial, sans-serif;
