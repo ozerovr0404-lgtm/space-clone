@@ -45,9 +45,9 @@ app.get('/tasks', async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const offset = (page - 1) * limit;
 
-    const { search, status, assignee_id } = req.query;
+    const { search, status, assignee_id, sortOrder } = req.query;
 
-    const result = await Task.getAll({search, limit, offset, status, assignee_id});
+    const result = await Task.getAll({search, limit, offset, status, assignee_id, sortOrder});
     res.json(result);
  });
 

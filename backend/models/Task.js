@@ -32,7 +32,7 @@ export class Task {
             LEFT JOIN users assignee ON t.assignee_id = assignee.id
         `;
 
-        static async getAll({search, limit, offset, status, assignee_id}) {
+        static async getAll({ search, limit, offset, status, assignee_id, sortOrder = 'desc' }) {
 
             const values = [];
             let where = '';
@@ -56,10 +56,12 @@ export class Task {
                 index++;
             }
 
+            const order = sortOrder === 'asc' ? 'ASC' : 'DESC';
+
             const dataQuery = `
                 ${this.baseSelect}
                 ${where}
-                ORDER BY t.created_at DESC
+                ORDER BY t.created_at ${order}
                 LIMIT $${index} OFFSET $${index + 1}
             `;
 

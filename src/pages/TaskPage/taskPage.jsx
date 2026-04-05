@@ -50,7 +50,7 @@ function TaskPage() {
     const fetchTasks = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch(`http://localhost:5000/tasks?page=${page+1}&limit=${rowsPerPage}&status=${filterStatus || ''}&assignee_id=${filterAssigneeId || ''}`, {
+        const res = await fetch(`http://localhost:5000/tasks?page=${page+1}&limit=${rowsPerPage}&status=${filterStatus || ''}&assignee_id=${filterAssigneeId || ''}&sortOrder=${sortOrder}`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`
@@ -65,7 +65,7 @@ function TaskPage() {
     };
 
     fetchTasks();
-  }, [page, rowsPerPage, filterStatus, filterAssigneeId]);
+  }, [page, rowsPerPage, filterStatus, filterAssigneeId, sortOrder]);
 
   useEffect(() => {
     fetch('http://localhost:5000/')
@@ -156,13 +156,7 @@ function TaskPage() {
   };
 
   
-  const sortedTasks = [...tasks].sort((a,b) => {
-    const dateA = new Date(a.created_at);
-    const dateB = new Date(b.created_at);
-    return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
-  });
-
-  const paginationTasks = sortedTasks;
+  const paginationTasks = tasks;
 
 
   const [isUserOpen, setIsUserOpen] = useState(false);
