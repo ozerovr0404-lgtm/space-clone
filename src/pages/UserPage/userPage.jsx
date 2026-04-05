@@ -31,7 +31,11 @@ function UserPage() {
                 onClose={() => setIsUserOpen(false)}
             />
 
-                <UserPageSeparator>
+            <ParamsButton>
+                <UserPhoto></UserPhoto>
+            </ParamsButton>
+                
+                {/* <UserPageSeparator>
                     <UserPhoto />
 
                     <UserName />
@@ -41,7 +45,7 @@ function UserPage() {
                 
                 <RightPartUserPage>
 
-                </RightPartUserPage>
+                </RightPartUserPage> */}
             
         </UserPageBackground>
     )
