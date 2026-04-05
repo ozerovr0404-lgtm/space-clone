@@ -12,7 +12,7 @@ function ProtectedRoute({ children }) {
         const {exp} = jwtDecode(token);
         if (Date.now() >= exp * 1000) {
             localStorage.removeItem('token');
-            return <Navigate to="/logim" />
+            return <Navigate to="/login" />
         }
     } catch (error) {
         localStorage.removeItem('token');

@@ -3,9 +3,9 @@ import './userSelectForFilter.css'
 
 
 function UserSelectForFilter({ users = [], value, onChange, }) {
-    const options = users.map(u => ({
-        label: `${u.last_name} ${u.first_name} ${u.middle_name ? u.middle_name : ''}`,  // Озеров Роман Сергеевич - first = Имя, middle = Отчество, last = Фамилия
-        value: u.id 
+    const options = users.map(user => ({
+        label: `${user.last_name} ${user.first_name} ${user.middle_name ? user.middle_name : ''}`,  // Озеров Роман Сергеевич - first = Имя, middle = Отчество, last = Фамилия
+        value: user.id 
     }));
 
     return(
@@ -15,7 +15,7 @@ function UserSelectForFilter({ users = [], value, onChange, }) {
             <div className='select-wrapper-in-filter'>
                 <Select
                     options={options}
-                    value={options.find(o => o.value === value) || null}
+                    value={options.find(o => String(o.value) === String(value)) || null}
                     onChange={options => onChange(options?.value || null)}
                     isClearable
                     placeholder="Выберите пользователя"

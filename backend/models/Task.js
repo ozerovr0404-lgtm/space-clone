@@ -32,16 +32,28 @@ export class Task {
             LEFT JOIN users assignee ON t.assignee_id = assignee.id
         `;
 
-        static async getAll({search, limit, offset}) {
+        static async getAll({search, limit, offset, status, assignee_id}) {
 
             const values = [];
             let where = '';
             let index = 1;
 
             if (search) {
-                where = ` WHERE t.title ILIKE $${index}`;
+                where += ` WHERE t.title ILIKE $${index}`;
                 values.push(`%${search}%`);
                 index++
+            }
+
+            if (status) {
+                where += where ? ` AND t.status = $${index}` : ` WHERE t.status = $${index}`;
+                values.push(status);
+                index++;
+            }
+
+            if (assignee_id) {
+                where += where ? ` AND t.assignee_id = $${index}` : ` WHERE t.assignee_id = $${index}`;
+                values.push(assignee_id);
+                index++;
             }
 
             const dataQuery = `
@@ -52,7 +64,6 @@ export class Task {
             `;
 
             const dataValues = [...values, limit, offset];
-
             const dataResult = await pool.query(dataQuery, dataValues);
 
             const countQuery = `SELECT COUNT(*) ${this.baseFrom} ${where}`;

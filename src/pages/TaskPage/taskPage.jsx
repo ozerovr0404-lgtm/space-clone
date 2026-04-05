@@ -17,8 +17,6 @@ import DrawerFilter from '../../features/tasks/DrawerFilter/DrawerFilter.jsx'
 import { searchTasks } from '../../api/tasks.js';
 import TaskModal from '../TaskModal/taskModal.jsx';
 
-import { filteredTasks } from '../../features/tasks/FilterTasks/filterTasks.js';
-
 import { TablePagination } from '@mui/material';
 
 
@@ -52,7 +50,7 @@ function TaskPage() {
     const fetchTasks = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch(`http://localhost:5000/tasks?page=${page+1}&limit=${rowsPerPage}`, {
+        const res = await fetch(`http://localhost:5000/tasks?page=${page+1}&limit=${rowsPerPage}&status=${filterStatus || ''}&assignee_id=${filterAssigneeId || ''}`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`
@@ -67,7 +65,7 @@ function TaskPage() {
     };
 
     fetchTasks();
-  }, [page, rowsPerPage]);
+  }, [page, rowsPerPage, filterStatus, filterAssigneeId]);
 
   useEffect(() => {
     fetch('http://localhost:5000/')
@@ -158,14 +156,13 @@ function TaskPage() {
   };
 
   
-  const filteredAndSortedTasks = filteredTasks(tasks, {
-    status: filterStatus,
-    assigneeId: filterAssigneeId
-  }).sort((a,b) => {
+  const sortedTasks = [...tasks].sort((a,b) => {
     const dateA = new Date(a.created_at);
     const dateB = new Date(b.created_at);
     return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
   });
+
+  const paginationTasks = sortedTasks;
 
 
   const [isUserOpen, setIsUserOpen] = useState(false);
@@ -180,7 +177,7 @@ function TaskPage() {
     setPage(0);
   }
 
-  const paginationTasks = tasks;
+
 
   const handleSearch = async (query) => {
       try {
@@ -300,11 +297,13 @@ function TaskPage() {
                   <DrawerFilter 
                     open={isFilterOpen} 
                     users={users}
+                    status={filterStatus}
                     assigneeId={filterAssigneeId}
                     setAssigneeId={setFilterAssigneeId}
                     onApply={({ status, assigneeId }) => {
                       setFilterStatus(status);
                       setFilterAssigneeId(assigneeId);
+                      setPage(0);
                     }}
                     onClose={() => setIsFilterOpen(false)}
                   />

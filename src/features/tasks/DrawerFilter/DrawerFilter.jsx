@@ -3,19 +3,20 @@ import { useState, useEffect } from 'react';
 import StatusSelect from '../../../pages/TaskPage/Selectors/StatusSelector/statusSelect';
 import UserSelectForFilter from '../../../pages/TaskPage/Selectors/UserSelectForFilter/userSelectForFilter';
 
-function DrawerFilter( {open, onClose, onApply, users, assigneeId} ) {
+function DrawerFilter({ open, onClose, onApply, users, assigneeId, status: initialStatus}) {
     const [status, setStatus] = useState(null);
     const [localAssigneeId, setLocalAssigneeId] = useState(assigneeId);
 
     useEffect(() => {
         if (open) {
-            setStatus(status);
-            setLocalAssigneeId(assigneeId);
+            setStatus(initialStatus || null)
+            setLocalAssigneeId(assigneeId || null);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [open, assigneeId]);
+    }, [open, assigneeId, initialStatus]);
 
     const handleApply = () => {
+        console.log('APPLY:', { status, localAssigneeId });
         onApply({ status, assigneeId: localAssigneeId });
         onClose();
     };
