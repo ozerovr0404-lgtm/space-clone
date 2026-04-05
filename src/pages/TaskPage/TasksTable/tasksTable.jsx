@@ -66,11 +66,13 @@ function TasksTable({tasks, setTasks, users, onTaskClick}) {
                             <td>{task.id}</td>
                             <td>{task.creator_full_name}</td>
                             <td>{task.title}</td>
-                            <td
-                                className='task-body-ceil'
-                                onClick={() => onTaskClick(task)}
-                            >
-                                {task.body}
+                            <td>
+                                <p
+                                    className='task-body-ceil'
+                                    onClick={() => onTaskClick(task)}
+                                    >
+                                        {task.body}
+                                </p>
                             </td>
                             <td>
                                 <AssigneeSelector
