@@ -5,16 +5,13 @@ import AssigneeSelector from '../Selectors/AssigneeSelector/assigneeSelector';
 import { updateTaskAssignee } from '../../../api/updateTaskAssignee';
 import { updateTaskStatus } from '../../../api/updateTaskStatus';
 
-function TasksTable({tasks, setTasks, users, onTaskClick}) {
+function TasksTable({tasks, setTasks, users, onTaskClick, fetchTasks}) {
 
     const handleStatusChange = async (taskId, newStatus) => {
         
         try {
-            const updateTask = await updateTaskStatus(taskId, newStatus);
-
-            setTasks(prevTasks => 
-                prevTasks.map(task => task.id === taskId ? updateTask : task)
-            );
+            await updateTaskStatus(taskId, newStatus);
+            fetchTasks();
 
         } catch (err) {
             console.error('Ошибка при обновлении статуса', err);
@@ -23,12 +20,8 @@ function TasksTable({tasks, setTasks, users, onTaskClick}) {
 
     const handleAssigneeChange = async (taskId, newAssigneeId) => {
         try {
-            const updateTaskAss = await updateTaskAssignee(taskId, newAssigneeId);
-
-            setTasks(prev =>
-                prev.map(task => task.id === taskId ? updateTaskAss : task)
-            );
-            console.log(updateTaskAss)
+            await updateTaskAssignee(taskId, newAssigneeId);
+            fetchTasks()
 
         } catch (err) {
             console.error('Ошибка обновления исполнителя', err);

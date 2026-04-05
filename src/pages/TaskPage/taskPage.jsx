@@ -1,5 +1,6 @@
 import './taskPage.css';
 import { useState, useEffect } from 'react';
+import { useCallback } from 'react';
 import TasksTable from './TasksTable/tasksTable.jsx';
 import UserSelect from './Selectors/UserSelector/userSelect.jsx';
 import UserMenu from '../../shared/icons/UserIconMenu/userMenu.jsx';
@@ -46,8 +47,8 @@ function TaskPage() {
   const [selectedTask, setSelectedTask] = useState(null);
   const [total, setTotal] = useState(0);
 
-  useEffect(() => {
-    const fetchTasks = async () => {
+
+  const fetchTasks = useCallback(async () => {
       try {
         const token = localStorage.getItem('token');
         const res = await fetch(`http://localhost:5000/tasks?page=${page+1}&limit=${rowsPerPage}&status=${filterStatus || ''}&assignee_id=${filterAssigneeId || ''}&sortOrder=${sortOrder}`, {
@@ -62,10 +63,12 @@ function TaskPage() {
       } catch (err) {
         console.error('Ошибка загрузки задач', err);
       }
-    };
+    }, [page, rowsPerPage, filterStatus, filterAssigneeId, sortOrder]);
+    
 
-    fetchTasks();
-  }, [page, rowsPerPage, filterStatus, filterAssigneeId, sortOrder]);
+    useEffect(() => {
+        fetchTasks();
+    }, [fetchTasks]);
 
   useEffect(() => {
     fetch('http://localhost:5000/')
@@ -233,6 +236,7 @@ function TaskPage() {
             tasks={paginationTasks}
             setTasks={setTasks}
             setTask={setSelectedTask}
+            fetchTasks={fetchTasks}
             users={users}
             onTaskClick={handleOpenTaskModal}
           />
