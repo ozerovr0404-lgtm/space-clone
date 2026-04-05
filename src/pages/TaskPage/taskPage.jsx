@@ -177,7 +177,7 @@ function TaskPage() {
       try {
           const data = await searchTasks(query);
           console.log('Найденные задачи:', data);
-          setTasks(data);
+          setTasks(data.tasks);
       } catch (err) {
           console.error('Ошибка поиска задач', err);
       }
