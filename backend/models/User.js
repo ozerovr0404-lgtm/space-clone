@@ -46,7 +46,7 @@ export class User {
         is_active = true
     }) {
         const result = await pool.query(
-            `SELECT INTO users
+            `INSERT INTO users
             (first_name, last_name, middle_name, login, password, is_active)
             VALUES ($1, $2, $3, $4, $5, $6)
             RETURNING *`,

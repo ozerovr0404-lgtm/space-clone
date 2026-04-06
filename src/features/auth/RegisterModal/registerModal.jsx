@@ -18,7 +18,7 @@ function RegisterModal({ onClose }) {
 
         if (password === repeatPassword) {  //Но лучше сделать через (password !== repeatPassword) чтобы была возможность добавлять иные проверки и почистить код
             try {
-                const response = await fetch('http://localhost:5000/register', {
+                const response = await fetch('http://localhost:5000/api/auth/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ login, password, last_name, first_name, middle_name, role, is_active })

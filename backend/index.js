@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import { Task } from './models/Task.js';
 import auth from './middleware/auth.js';
 import { User } from './models/User.js';
+import authRoutes from './routes/authRoutes.js'
 
 const app = express();
 const PORT = 5000;
@@ -171,94 +172,6 @@ app.patch('/tasks/:id', async (req, res) => {
 });
 
 
-// Добавляем роуты на регистрацию
+// Добавляем роуты на регистрацию вынеси в отдельный файл и здесь router.get()
 
-app.post('/register', async (req, res) => {
-    const { login, password, first_name, last_name, middle_name, is_active } = req.body;
-
-    // Проверка на англ символы и цифры
-    const ENG_SYMBOL = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_';
-
-    if (!login.split("").every(char => ENG_SYMBOL.includes(char))) {
-        return res.status(400).json({ error: 'Логин может содержать только латинские буквы и цифры!' })
-    }
-
-    // Проверка на путые поля
-    if (!first_name || !last_name || !login || !password) {
-        return res.status(400).json({ error: 'Логин, Фамилия, Имя и пароль обязательны' });
-    }
-
-    try {
-
-        const existingUser = await User.getByLogin(login);
-        if (existingUser) {
-            return res.status(400).json({ error: `Такой логин уже существует` });
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const user = await User.createWithHashedPassword({
-            first_name,
-            last_name,
-            middle_name,
-            login,
-            password: hashedPassword,
-            is_active
-        });
-
-        res.json({
-            message: `Пользователь зарегистрирован`,
-            user: {
-                id: user.id,
-                login: user.login
-            }
-        });
-
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ error: `Ошибка сервера` });
-        }
-    });
-
-// Авторизация (для зарегистрированных)
-
-app.post('/login', async (req, res) => {
-    const { login, password } = req.body;
-
-    if (!login || !password) {
-        return res.status(400).json({ error: 'Логин и пароль обязательны' });
-    }
-
-    try {
-        const user = await User.getByLogin(login);
-
-        if (!user) {
-            return res.status(400).json({ error: 'Неверный логин или пароль' });
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-
-        if (!isMatch) {
-            return res.status(400).json({ error: 'Неверный логин или пароль' });
-        }
-
-        const token = jwt.sign(
-            { id: user.id, login: user.login },
-            JWT_SECRET,
-            { expiresIn: '1h' }
-        );
-
-        res.json({
-            message: 'Успешный вход',
-            token,
-            user: {
-                id: user.id,
-                login: user.login
-            }
-        });
-
-    } catch (err) {
-        console.error(err)
-        res.status(500).json({ error: 'Ошибка сервера' });
-    }
-});
+app.use('/api/auth', authRoutes);
